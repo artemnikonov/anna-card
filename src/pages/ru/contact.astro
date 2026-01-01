@@ -1,0 +1,9 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import ContactPage from '@/components/pages/ContactPage';
+---
+
+<MainLayout title="Контакты - Анна Закерничная" description="Свяжитесь с нами, чтобы начать свой путь к восстановлению">
+  <ContactPage client:only="react" />
+</MainLayout>
+

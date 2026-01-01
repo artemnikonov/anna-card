@@ -1,0 +1,134 @@
+---
+import '@/styles/global.css';
+import '@/styles/fonts.css';
+import { ClientRouter } from 'astro:transitions';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import { getLocaleFromUrl } from '@/lib/i18n';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+}
+
+const {
+  title = 'Anna Zakernichnaia - Posture & Pain Recovery',
+  description = 'Anna Zakernichnaia - Movement Therapy & Posture Recovery Specialist',
+  image = '/images/og-image.jpg',
+  canonical = Astro.url.pathname
+} = Astro.props;
+
+const locale = getLocaleFromUrl(Astro.url);
+const canonicalURL = new URL(canonical, Astro.site);
+const imageURL = new URL(image, Astro.site);
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#5F9EA0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Prefetch all pages for instant navigation -->
+    <link rel="prefetch" href="/" />
+    <link rel="prefetch" href="/about/" />
+    <link rel="prefetch" href="/services/" />
+    <link rel="prefetch" href="/methodology/" />
+    <link rel="prefetch" href="/testimonials/" />
+    <link rel="prefetch" href="/contact/" />
+    <link rel="prefetch" href="/ru/" />
+    <link rel="prefetch" href="/ru/about/" />
+    <link rel="prefetch" href="/ru/services/" />
+    <link rel="prefetch" href="/ru/methodology/" />
+    <link rel="prefetch" href="/ru/testimonials/" />
+    <link rel="prefetch" href="/ru/contact/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageURL} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={imageURL} />
+
+    <!-- Additional SEO -->
+    <meta name="author" content="Anna Zakernichnaia" />
+    <meta name="keywords" content="posture recovery, movement therapy, pain relief, posture correction, chronic pain, body alignment, Cyprus physiotherapy" />
+
+    <ClientRouter />
+    <script is:inline>
+      if (!window.__astroScrollToTopInitialized) {
+        window.__astroScrollToTopInitialized = true;
+        document.addEventListener('astro:after-swap', () => {
+          window.scrollTo({ left: 0, top: 0, behavior: 'instant' });
+        });
+      }
+    </script>
+
+
+
+    <style is:inline>
+      html {
+        background-color: #FFFFFF;
+      }
+
+      body {
+        background-color: #FFFFFF;
+        display: block !important;
+      }
+
+      body::view-transition-old(root),
+      body::view-transition-new(root) {
+        animation: none;
+      }
+
+      header {
+        position: fixed;
+        z-index: 50;
+      }
+
+      .page-shell {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .page-shell main {
+        flex: 1;
+      }
+
+    </style>
+
+
+
+  </head>
+  <body>
+    <div class="page-shell min-h-screen bg-white flex flex-col">
+      <Header client:load />
+
+      <main class="pt-20 flex-1 min-h-[60vh]" transition:animate="fade">
+        <slot />
+      </main>
+
+      <Footer client:load />
+    </div>
+
+  </body>
+</html>
+

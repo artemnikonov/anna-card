@@ -1,0 +1,9 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import HomePage from '@/components/pages/HomePage';
+---
+
+<MainLayout title="Анна Закерничная - Восстановление осанки и избавление от боли" description="Анна Закерничная - Специалист по двигательной терапии и восстановлению осанки">
+  <HomePage client:only="react" />
+</MainLayout>
+

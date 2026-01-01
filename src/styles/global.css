@@ -1,0 +1,121 @@
+@import './fonts.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    button,
+    a,
+    [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+
+@layer components {
+  [role="tabpanel"] {
+    @apply transition-opacity duration-200;
+  }
+
+  .language-switcher {
+    @apply transition-colors duration-200;
+  }
+
+  .animate-in {
+    animation-fill-mode: both;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .slide-in-from-bottom {
+    animation: slide-in-from-bottom var(--animation-duration, 0.6s) ease-out
+      var(--animation-delay, 0.2s) forwards;
+  }
+
+  .slide-in-from-top {
+    animation: slide-in-from-top var(--animation-duration, 0.6s) ease-out
+      var(--animation-delay, 0.2s) forwards;
+  }
+
+  .fade-in {
+    animation-fill-mode: both;
+    opacity: 0;
+    animation: fade-in var(--animation-duration, 1s) ease-out var(--animation-delay, 0.2s) forwards;
+  }
+
+  .scale-in {
+    animation: scale-in var(--animation-duration, 0.6s) ease-out var(--animation-delay, 0.2s)
+      forwards;
+  }
+
+  @keyframes slide-in-from-bottom {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-from-top {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
