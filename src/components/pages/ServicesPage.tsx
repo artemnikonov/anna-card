@@ -205,7 +205,7 @@ export default function ServicesPage() {
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-6 leading-tight">
               {t.services.getStarted}
             </h2>
-            <p className="text-lg sm:text-xl font-paragraph text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl font-paragraph text-white mb-8 max-w-2xl mx-auto leading-relaxed">
               {t.services.getStartedSubtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

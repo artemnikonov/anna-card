@@ -14,8 +14,8 @@ interface Props {
 }
 
 const {
-  title = 'Anna Zakernichnaia - Posture & Pain Recovery',
-  description = 'Anna Zakernichnaia - Movement Therapy & Posture Recovery Specialist',
+  title = 'Anna Zakernichnaia - Posture & Movement Coaching',
+  description = 'Anna Zakernichnaia - Movement Coaching & Posture Specialist',
   image = '/images/og-image.jpg',
   canonical = Astro.url.pathname
 } = Astro.props;
@@ -37,21 +37,8 @@ const imageURL = new URL(image, Astro.site);
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
-
-    <!-- Prefetch all pages for instant navigation -->
-    <link rel="prefetch" href="/" />
-    <link rel="prefetch" href="/about/" />
-    <link rel="prefetch" href="/services/" />
-    <link rel="prefetch" href="/methodology/" />
-    <link rel="prefetch" href="/testimonials/" />
-    <link rel="prefetch" href="/contact/" />
-    <link rel="prefetch" href="/ru/" />
-    <link rel="prefetch" href="/ru/about/" />
-    <link rel="prefetch" href="/ru/services/" />
-    <link rel="prefetch" href="/ru/methodology/" />
-    <link rel="prefetch" href="/ru/testimonials/" />
-    <link rel="prefetch" href="/ru/contact/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -69,9 +56,11 @@ const imageURL = new URL(image, Astro.site);
 
     <!-- Additional SEO -->
     <meta name="author" content="Anna Zakernichnaia" />
-    <meta name="keywords" content="posture recovery, movement therapy, pain relief, posture correction, chronic pain, body alignment, Cyprus physiotherapy" />
+    <meta name="keywords" content="posture coaching, movement training, posture correction, body alignment, mobility, functional movement, Cyprus" />
 
+    <slot name="head" />
     <ClientRouter />
+
     <script is:inline>
       if (!window.__astroScrollToTopInitialized) {
         window.__astroScrollToTopInitialized = true;
@@ -80,8 +69,6 @@ const imageURL = new URL(image, Astro.site);
         });
       }
     </script>
-
-
 
     <style is:inline>
       html {
@@ -93,9 +80,15 @@ const imageURL = new URL(image, Astro.site);
         display: block !important;
       }
 
-      body::view-transition-old(root),
-      body::view-transition-new(root) {
-        animation: none;
+      /* Disable view transition animations to prevent flickering */
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none !important;
+      }
+
+      /* Prevent any flash during navigation */
+      ::view-transition-group(root) {
+        animation-duration: 0s !important;
       }
 
       header {
@@ -120,13 +113,17 @@ const imageURL = new URL(image, Astro.site);
   </head>
   <body>
     <div class="page-shell min-h-screen bg-white flex flex-col">
-      <Header client:load />
+      <div transition:persist="header">
+        <Header client:load />
+      </div>
 
-      <main class="pt-20 flex-1 min-h-[60vh]" transition:animate="fade">
+      <main class="pt-20 flex-1 min-h-[60vh]">
         <slot />
       </main>
 
-      <Footer client:load />
+      <div transition:persist="footer">
+        <Footer client:load />
+      </div>
     </div>
 
   </body>

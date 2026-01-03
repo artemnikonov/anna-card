@@ -27,6 +27,8 @@ export default function HomePage() {
               <Image
                 src="/images/home/anna-avatar.jpg"
                 width={250}
+                height={250}
+                loading="eager"
                 className="w-40 sm:w-48 md:w-64 h-40 sm:h-48 md:h-64 rounded-full mx-auto mb-8 object-cover object-[20%_30%] shadow-sm border-4 border-white/20"
                 alt="Anna Z. - Professional Portrait" />
             </motion.div>
@@ -255,23 +257,19 @@ export default function HomePage() {
             {[
               {
                 title: t.homepage.postureCorrection,
-                description: t.homepage.postureCorrectionDesc,
-                icon: "🏃‍♀️"
+                description: t.homepage.postureCorrectionDesc
               },
               {
                 title: t.homepage.deskWorkerRecovery,
-                description: t.homepage.deskWorkerRecoveryDesc,
-                icon: "💻"
+                description: t.homepage.deskWorkerRecoveryDesc
               },
               {
                 title: t.homepage.mobilityRehab,
-                description: t.homepage.mobilityRehabDesc,
-                icon: "🤸‍♀️"
+                description: t.homepage.mobilityRehabDesc
               },
               {
                 title: t.homepage.painReliefCoaching,
-                description: t.homepage.painReliefCoachingDesc,
-                icon: "🎯"
+                description: t.homepage.painReliefCoachingDesc
               }
             ].map((service, index) => (
               <motion.div
@@ -283,14 +281,7 @@ export default function HomePage() {
                 whileHover={{ y: -8 }}
               >
                 <Card className="h-full hover:shadow-2xl transition-all duration-300 group border border-gray-200 hover:border-primary/30 bg-white">
-                  <CardContent className="p-6 text-center">
-                    <motion.div
-                      className="text-4xl mb-4 inline-block"
-                      whileHover={{ scale: 1.2, rotate: 5 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      {service.icon}
-                    </motion.div>
+                  <CardContent className="p-5 sm:p-6 text-center">
                     <h3 className="text-lg sm:text-xl font-heading !font-bold text-gray-800 mb-3 group-hover:text-primary transition-colors duration-300 leading-tight">
                       {service.title}
                     </h3>
@@ -330,7 +321,7 @@ export default function HomePage() {
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-6 leading-tight">
               {t.homepage.readyToStart}
             </h2>
-            <p className="text-lg sm:text-xl font-paragraph text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl font-paragraph text-white mb-8 max-w-2xl mx-auto leading-relaxed">
               {t.homepage.readyToStartSubtitle}
             </p>
             <a href={getLocalizedPath('/contact', language)} className="inline-block" aria-label={t.homepage.ariaBookYourSession}>

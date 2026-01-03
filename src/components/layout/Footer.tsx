@@ -1,20 +1,14 @@
-import { useState, useEffect } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Mail, MapPin, Camera, MessageCircle, Send } from 'lucide-react';
 import { getLocalizedPath } from '@/lib/i18n';
 import { baseNavigation } from '@/lib/navigation';
 
 export default function Footer() {
-  const [isClient, setIsClient] = useState(false);
   const { t, language } = useTranslation();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   const navigation = baseNavigation.map((item) => ({
-    name: isClient ? t.nav[item.key] : item.fallbackLabel,
-    href: isClient ? getLocalizedPath(item.path, language) : item.path,
+    name: t.nav[item.key as keyof typeof t.nav],
+    href: getLocalizedPath(item.path, language),
   }));
 
   return (
@@ -26,22 +20,22 @@ export default function Footer() {
               <div className="w-10 sm:w-12 h-10 sm:h-12 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
                 <span className="text-white font-heading font-bold text-lg sm:text-xl">AZ</span>
               </div>
-              <div className="min-w-0">
+              <div className="min-w-0" suppressHydrationWarning>
                 <div className="font-heading font-bold text-white text-base sm:text-xl">
-                  Anna Zakernichnaia - Posture & Pain Recovery
+                  Anna Zakernichnaia - {t.common.tagline}
                 </div>
                 <div className="font-paragraph text-gray-300 text-xs sm:text-sm">
-                  {isClient ? t.homepage.heroTitle : 'Movement Specialist'}
+                  {t.homepage.heroTitle}
                 </div>
               </div>
             </div>
-            <p className="font-paragraph text-gray-300 leading-relaxed max-w-md">
-              {isClient ? t.about.subtitle : 'Dedicated to helping you achieve functional recovery through movement, posture re-education, and mobility work.'}
+            <p className="font-paragraph text-gray-300 leading-relaxed max-w-md" suppressHydrationWarning>
+              {t.about.subtitle}
             </p>
           </div>
 
-          <div>
-            <h4 className="font-heading font-semibold text-white mb-4">{isClient ? t.footer.quickLinks : 'Quick Links'}</h4>
+          <div suppressHydrationWarning>
+            <h4 className="font-heading font-semibold text-white mb-4">{t.footer.quickLinks}</h4>
             <ul className="space-y-2">
               {navigation.map((item) => (
                 <li key={item.href}>
@@ -56,13 +50,13 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h4 className="font-heading font-semibold text-white mb-4">{isClient ? t.contact.contactInfo : 'Contact'}</h4>
+          <div suppressHydrationWarning>
+            <h4 className="font-heading font-semibold text-white mb-4">{t.contact.contactInfo}</h4>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-primary mt-0.5" />
                 <div>
-                  <p className="font-paragraph text-gray-300">{isClient ? t.contact.locationValue : 'Moscow, Russia'}</p>
+                  <p className="font-paragraph text-gray-300">{t.contact.locationValue}</p>
                 </div>
               </div>
               <a
@@ -81,14 +75,14 @@ export default function Footer() {
                 className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors"
               >
                 <MessageCircle className="w-5 h-5 text-primary" />
-                <span className="font-paragraph">{isClient ? t.contact.phoneValue : '+7 (926) 729-13-13'}</span>
+                <span className="font-paragraph">{t.contact.phoneValue}</span>
               </a>
               <a
                 href="mailto:ann.massage@icloud.com"
                 className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors"
               >
                 <Mail className="w-5 h-5 text-primary" />
-                <span className="font-paragraph">{isClient ? t.contact.emailValue : 'ann.massage@icloud.com'}</span>
+                <span className="font-paragraph">{t.contact.emailValue}</span>
               </a>
             </div>
           </div>
@@ -96,8 +90,8 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="font-paragraph text-gray-400 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} Anna Zakernichnaia - Posture & Pain Recovery
+            <p className="font-paragraph text-gray-400 text-sm mb-4 md:mb-0" suppressHydrationWarning>
+              © {new Date().getFullYear()} Anna Zakernichnaia - {t.common.tagline}
             </p>
             <div className="flex items-center space-x-4">
               <a
@@ -141,4 +135,3 @@ export default function Footer() {
     </footer>
   );
 }
-

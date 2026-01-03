@@ -27,5 +27,10 @@ export class DataService {
     };
   }
 
+  static getTestimonialsDisclaimer(locale: Locale = 'en'): string {
+    const data = testimonialsData as unknown as { disclaimer: Record<Locale, string> };
+    return data.disclaimer?.[locale] || data.disclaimer?.en || '';
+  }
+
 }
 

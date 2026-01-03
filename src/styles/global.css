@@ -14,6 +14,12 @@
     scroll-behavior: smooth;
   }
 
+  /* Prevent long words from causing horizontal overflow */
+  p, h1, h2, h3, h4, h5, h6, span, li {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
   body {
     position: relative;
     -webkit-font-smoothing: antialiased;
@@ -29,13 +35,41 @@
     }
   }
 
+  /* Focus indicators for accessibility */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+
+  /* Remove default outline since we're using custom focus styles */
+  a:focus,
+  button:focus,
+  [role="button"]:focus {
+    outline: none;
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
     *,
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* Disable framer-motion transforms */
+    [style*="transform"] {
+      transform: none !important;
     }
   }
 }

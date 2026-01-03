@@ -1,4 +1,8 @@
 {
+  "disclaimer": {
+    "en": "Testimonials reflect the personal experiences of individual clients. Results may vary. These services are not medical treatment and do not replace professional medical advice.",
+    "ru": "Отзывы отражают личный опыт клиентов. Результаты могут отличаться. Данные услуги не являются медицинским лечением и не заменяют консультацию врача."
+  },
   "en": [
     {
       "_id": "1",

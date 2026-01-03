@@ -51,5 +51,5 @@ ssh -i $SSH_KEY $SERVER_USER@$SERVER_HOST << 'ENDSSH'
 ENDSSH
 
 echo -e "${GREEN}✅ Deployment successful!${NC}"
-echo -e "${GREEN}🌐 Site is available at: http://$SERVER_HOST:3000${NC}"
+echo -e "${GREEN}🌐 Site is available at: https://annabody.studio${NC}"
 

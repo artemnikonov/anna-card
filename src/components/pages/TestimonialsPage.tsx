@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,6 +15,7 @@ export default function TestimonialsPage() {
     const [loading, setLoading] = useState(true);
     const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
     const { t, language } = useTranslation();
+    const disclaimer = DataService.getTestimonialsDisclaimer(language);
 
     const toggleExpanded = (id: string) => {
         setExpandedIds(prev => {
@@ -47,9 +48,7 @@ export default function TestimonialsPage() {
     }, [language]);
 
     const MAX_LENGTH = 420;
-
     const shouldTruncate = (text: string) => text.length > MAX_LENGTH;
-    const getTruncatedText = (text: string) => text.slice(0, MAX_LENGTH) + '...';
 
     if (loading) {
         return (
@@ -127,7 +126,7 @@ export default function TestimonialsPage() {
                                             stat.text
                                         )}
                                     </div>
-                                    <div className="font-paragraph text-sm sm:text-base text-white/90">
+                                    <div className="font-paragraph text-sm sm:text-base text-white">
                                         {stat.label}
                                     </div>
                                 </motion.div>
@@ -139,14 +138,18 @@ export default function TestimonialsPage() {
                 {/* Testimonials */}
                 <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white border-t border-gray-100">
                     <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
+                        {/* Disclaimer */}
+                        {disclaimer && (
+                            <div className="mb-8 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                                <p className="text-sm text-gray-600 text-center italic">
+                                    {disclaimer}
+                                </p>
+                            </div>
+                        )}
                         <div className="space-y-8 sm:space-y-10">
                             {testimonials.map((testimonial) => {
                                 const isExpanded = expandedIds.has(testimonial._id);
                                 const needsTruncation = shouldTruncate(testimonial.testimonialText || '');
-                                const displayText =
-                                    needsTruncation && !isExpanded
-                                        ? getTruncatedText(testimonial.testimonialText || '')
-                                        : testimonial.testimonialText || '';
 
                                 return (
                                     <motion.div key={testimonial._id} layout>
@@ -174,33 +177,31 @@ export default function TestimonialsPage() {
                                                     </div>
                                                 </div>
 
-                                                <div
-                                                    className={`relative ${
-                                                        needsTruncation && !isExpanded ? 'max-h-40 overflow-hidden' : ''
-                                                    }`}
+                                                <motion.div
+                                                    className="relative overflow-hidden"
+                                                    initial={false}
+                                                    animate={{
+                                                        height: needsTruncation && !isExpanded ? 160 : 'auto',
+                                                    }}
+                                                    transition={{
+                                                        height: { duration: 0.4, ease: [0.4, 0, 0.2, 1] },
+                                                    }}
                                                 >
-                                                    <AnimatePresence mode="wait" initial={false}>
-                                                        <motion.div
-                                                            layout
-                                                            key={isExpanded ? 'expanded' : 'collapsed'}
-                                                            className="font-paragraph text-gray-700/95 leading-relaxed text-[15px] sm:text-[16px]"
-                                                            initial={{ opacity: 0, y: 4 }}
-                                                            animate={{ opacity: 1, y: 0 }}
-                                                            exit={{ opacity: 0, y: -4 }}
-                                                            transition={{ duration: 0.2 }}
-                                                        >
-                                                            {displayText.split(/\n+/).map((paragraph, i) => (
-                                                                <p key={i} className="mb-3 last:mb-0">
-                                                                    {paragraph}
-                                                                </p>
-                                                            ))}
-                                                        </motion.div>
-                                                    </AnimatePresence>
+                                                    <div className="font-paragraph text-gray-700/95 leading-relaxed text-[15px] sm:text-[16px]">
+                                                        {(testimonial.testimonialText || '').split(/\n+/).map((paragraph, i) => (
+                                                            <p key={i} className="mb-3 last:mb-0">
+                                                                {paragraph}
+                                                            </p>
+                                                        ))}
+                                                    </div>
 
-                                                    {needsTruncation && !isExpanded && (
-                                                        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent pointer-events-none" />
-                                                    )}
-                                                </div>
+                                                    <motion.div
+                                                        className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent pointer-events-none"
+                                                        initial={false}
+                                                        animate={{ opacity: needsTruncation && !isExpanded ? 1 : 0 }}
+                                                        transition={{ duration: 0.3 }}
+                                                    />
+                                                </motion.div>
 
                                                 {needsTruncation && (
                                                     <div className="mt-4 pt-3 border-t border-gray-100">
@@ -212,12 +213,12 @@ export default function TestimonialsPage() {
                                                         >
                                                             {isExpanded ? (
                                                                 <>
-                                                                    <span>{language === 'ru' ? 'Свернуть' : 'Show less'}</span>
+                                                                    <span>{t.testimonials.showLess}</span>
                                                                     <ChevronUp className="w-4 h-4" />
                                                                 </>
                                                             ) : (
                                                                 <>
-                                                                    <span>{language === 'ru' ? 'Читать далее' : 'Read more'}</span>
+                                                                    <span>{t.testimonials.readMore}</span>
                                                                     <ChevronDown className="w-4 h-4" />
                                                                 </>
                                                             )}
@@ -238,12 +239,10 @@ export default function TestimonialsPage() {
                     <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
                         <div className="text-center mb-12 sm:mb-16">
                             <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-gray-800 mb-4 sm:mb-6 px-4 leading-tight">
-                                {language === 'ru' ? 'Программы, которые меняют жизни' : 'Programs That Transform Lives'}
+                                {t.testimonials.programsTitle}
                             </h2>
                             <p className="text-base sm:text-lg font-paragraph text-blue-gray max-w-3xl mx-auto px-4 leading-relaxed">
-                                {language === 'ru'
-                                    ? 'Наши клиенты достигли успеха во всех наших специализированных программах восстановления.'
-                                    : 'Our clients have experienced success across all our specialized recovery programs.'}
+                                {t.testimonials.programsSubtitle}
                             </p>
                         </div>
 
@@ -297,7 +296,7 @@ export default function TestimonialsPage() {
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white mb-4 sm:mb-6 px-4">
                             {t.testimonials.readyToJoin}
                         </h2>
-                        <p className="text-base sm:text-lg md:text-xl font-paragraph text-white/90 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+                        <p className="text-base sm:text-lg md:text-xl font-paragraph text-white mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
                             {t.testimonials.readyToJoinSubtitle}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">

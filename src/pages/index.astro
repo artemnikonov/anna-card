@@ -4,5 +4,8 @@ import HomePage from '@/components/pages/HomePage';
 ---
 
 <MainLayout>
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/images/home/anna-avatar.jpg" />
+  </Fragment>
   <HomePage client:load />
 </MainLayout>

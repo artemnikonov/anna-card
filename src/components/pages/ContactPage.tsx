@@ -232,7 +232,7 @@ export default function ContactPage() {
               </Card>
             </motion.div>
 
-            {/* Recovery Studio */}
+            {/* Movement Studio */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -243,7 +243,7 @@ export default function ContactPage() {
                 <CardContent className="p-0">
                   <Image
                     src="/images/contact/recovery-studio.jpg"
-                    alt="Anna Z. Recovery Studio in Limassol, Cyprus"
+                    alt="Private practice space in Limassol, Cyprus"
                     width={600}
                     className="w-full h-64 object-cover rounded-t-lg"
                   />

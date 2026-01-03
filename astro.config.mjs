@@ -4,8 +4,9 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: 'https://91.98.68.252',
+  site: 'https://annabody.studio',
   output: "static",
+  prefetch: false,
   i18n: {
     defaultLocale: "en",
     locales: ["en", "ru"],

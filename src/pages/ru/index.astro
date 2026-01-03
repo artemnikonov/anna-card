@@ -4,6 +4,9 @@ import HomePage from '@/components/pages/HomePage';
 ---
 
 <MainLayout title="Анна Закерничная - Восстановление осанки и избавление от боли" description="Анна Закерничная - Специалист по двигательной терапии и восстановлению осанки">
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/images/home/anna-avatar.jpg" />
+  </Fragment>
   <HomePage client:only="react" />
 </MainLayout>
 

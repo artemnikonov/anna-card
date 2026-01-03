@@ -42,7 +42,7 @@ export default function AboutPage() {
             >
               <Image
                 src="/images/about/about_job.jpg"
-                alt="Anna Z. - Professional massage therapy session"
+                alt="Anna Z. - Professional movement coaching session"
                 width={600}
                 className="w-full h-96 object-cover rounded-lg"
               />
@@ -281,7 +281,7 @@ export default function AboutPage() {
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-6 leading-tight">
               {t.about.readyToTransform}
             </h2>
-            <p className="text-lg sm:text-xl font-paragraph text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl font-paragraph text-white mb-8 max-w-2xl mx-auto leading-relaxed">
               {t.about.readyToTransformSubtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -2,12 +2,14 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { translations } from '@/lib/translations';
 import type { Translation } from '@/lib/translations';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { defaultLocale, getLocaleFromPathname, type Locale } from '@/lib/i18n';
 
 interface LanguageStore {
   language: Locale;
+  hydrated: boolean;
   setLanguage: (language: Locale) => void;
+  syncWithUrl: () => void;
   t: Translation;
 }
 
@@ -18,26 +20,39 @@ const getLanguageFromUrl = (): Locale => {
 
 export const useLanguageStore = create<LanguageStore>()(
   persist(
-    (set) => {
+    (set, get) => {
       const urlLanguage = getLanguageFromUrl();
       return {
         language: urlLanguage,
+        hydrated: false,
         setLanguage: (language: Locale) => {
           set({
             language,
             t: translations[language]
           });
         },
+        syncWithUrl: () => {
+          const urlLanguage = getLanguageFromUrl();
+          const currentLanguage = get().language;
+          if (urlLanguage !== currentLanguage) {
+            set({
+              language: urlLanguage,
+              t: translations[urlLanguage]
+            });
+          }
+        },
         t: translations[urlLanguage],
       };
     },
     {
       name: 'language-storage',
+      partialize: (state) => ({ language: state.language }),
       onRehydrateStorage: () => (state) => {
         if (state) {
           const urlLanguage = getLanguageFromUrl();
           state.language = urlLanguage;
           state.t = translations[urlLanguage];
+          state.hydrated = true;
         }
       },
     }
@@ -45,18 +60,25 @@ export const useLanguageStore = create<LanguageStore>()(
 );
 
 export const useTranslation = () => {
-  const { language, setLanguage, t } = useLanguageStore();
+  const { language, setLanguage, syncWithUrl, t, hydrated } = useLanguageStore();
 
+  // Sync with URL on mount and on navigation
   useEffect(() => {
-    const urlLanguage = getLanguageFromUrl();
-    if (urlLanguage !== language) {
-      setLanguage(urlLanguage);
-    }
-  }, []);
+    syncWithUrl();
+
+    // Listen for Astro page navigation
+    const handlePageLoad = () => syncWithUrl();
+    document.addEventListener('astro:page-load', handlePageLoad);
+
+    return () => {
+      document.removeEventListener('astro:page-load', handlePageLoad);
+    };
+  }, [syncWithUrl]);
 
   return {
     language,
     setLanguage,
     t,
+    hydrated,
   };
 };

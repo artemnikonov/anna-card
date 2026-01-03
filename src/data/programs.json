@@ -5,10 +5,10 @@
       "_createdDate": "2024-01-01T00:00:00.000Z",
       "_updatedDate": "2024-01-01T00:00:00.000Z",
       "programName": "Online Consultations",
-      "shortDescription": "Professional online assessment and a clear recovery strategy",
-      "fullDescription": "Online consultations are designed for people who need a precise understanding of their pain or movement limitations. During the session, I analyze your posture, movement patterns, habits, and possible factors contributing to discomfort. You receive a structured recovery plan, corrective exercises, and actionable steps you can begin immediately. Online format works just as effectively as in-person sessions when guided with proper diagnostics and clear instructions.",
+      "shortDescription": "Professional online assessment and a clear movement strategy",
+      "fullDescription": "Online consultations are designed for people who need a precise understanding of their discomfort or movement limitations. During the session, I analyze your posture, movement patterns, habits, and possible factors contributing to tension. You receive a structured program, corrective exercises, and actionable steps you can begin immediately. Online format works just as effectively as in-person sessions when guided with proper assessment and clear instructions.",
       "programImage": "/images/services/consultation.jpg",
-      "keyBenefits": "Accurate assessment, Personalized recovery plan, Accessible worldwide, Detailed exercise guidance, Effective even without in-person visits"
+      "keyBenefits": "Accurate assessment, Personalized program, Accessible worldwide, Detailed exercise guidance, Effective even without in-person visits"
     },
     {
       "_id": "2",
@@ -16,7 +16,7 @@
       "_updatedDate": "2024-01-01T00:00:00.000Z",
       "programName": "Online or In-Person Training",
       "shortDescription": "Personalized sessions to restore movement, improve posture, and strengthen weak areas",
-      "fullDescription": "Training sessions focus on rebuilding natural movement patterns, activating stabilizing muscles, and correcting dysfunctional habits that lead to pain. Each exercise is selected based on your condition and goals. Online format is equally effective — I guide technique, correct movements in real time, and track your progress.",
+      "fullDescription": "Training sessions focus on rebuilding natural movement patterns, activating stabilizing muscles, and correcting imbalanced habits that lead to tension. Each exercise is selected based on your situation and goals. Online format is equally effective — I guide technique, correct movements in real time, and track your progress.",
       "programImage": "/images/services/training.jpg",
       "keyBenefits": "Technique correction, Strengthening weak areas, Improved movement patterns, Posture correction, Works online and offline"
     },
@@ -25,10 +25,10 @@
       "_createdDate": "2024-01-01T00:00:00.000Z",
       "_updatedDate": "2024-01-01T00:00:00.000Z",
       "programName": "Sports Massage",
-      "shortDescription": "Deep therapeutic work for muscle release, recovery, and improved mobility",
-      "fullDescription": "Sports massage targets deep layers of muscles and fascia. It relieves tension, restores mobility, improves circulation, and reduces chronic tightness caused by training, stress, or sedentary work. Suitable for athletes and anyone experiencing persistent muscle tension.",
+      "shortDescription": "Deep bodywork for muscle release and improved mobility",
+      "fullDescription": "Sports massage targets deep layers of muscles and fascia. It relieves tension, restores mobility, improves circulation, and reduces persistent tightness caused by training, stress, or sedentary work. Suitable for athletes and anyone experiencing ongoing muscle tension.",
       "programImage": "/images/services/massage.jpg",
-      "keyBenefits": "Muscle release, Better mobility, Pain reduction, Faster recovery, Trigger point therapy"
+      "keyBenefits": "Muscle release, Better mobility, Tension reduction, Faster restoration, Trigger point work"
     },
     {
       "_id": "4",
@@ -36,9 +36,9 @@
       "_updatedDate": "2024-01-01T00:00:00.000Z",
       "programName": "Kinesio Taping",
       "shortDescription": "Joint and muscle support through professional kinesio taping",
-      "fullDescription": "Kinesio taping stabilizes joints, reduces strain, decreases inflammation, and supports muscles during movement. Applied with proper anatomical and biomechanical understanding, it speeds recovery after injuries, reduces chronic pain, and improves movement quality.",
+      "fullDescription": "Kinesio taping stabilizes joints, reduces tension, and supports muscles during movement. Applied with proper anatomical and biomechanical understanding, it speeds restoration after setbacks, reduces persistent discomfort, and improves movement quality.",
       "programImage": "/images/services/taping.jpg",
-      "keyBenefits": "Joint support, Pain reduction, Reduced swelling, Improved movement, Supports injury recovery"
+      "keyBenefits": "Joint support, Tension reduction, Reduced swelling, Improved movement, Supports restoration"
     }
   ],
   "ru": [
@@ -47,18 +47,18 @@
       "_createdDate": "2024-01-01T00:00:00.000Z",
       "_updatedDate": "2024-01-01T00:00:00.000Z",
       "programName": "Онлайн-консультации",
-      "shortDescription": "Профессиональная онлайн-оценка состояния и чёткий план восстановления",
-      "fullDescription": "Онлайн-консультация подходит тем, кто хочет точно понять причину боли или ограничений в движении. Я анализирую осанку, движения, привычки и возможные факторы, вызывающие дискомфорт. Вы получаете структурированный план восстановления, корректирующие упражнения и понятные рекомендации, с которыми можно начинать сразу. При правильной диагностике онлайн-формат работает так же эффективно, как очная встреча.",
+      "shortDescription": "Профессиональная онлайн-оценка состояния и чёткий план работы",
+      "fullDescription": "Онлайн-консультация подходит тем, кто хочет точно понять причину дискомфорта или ограничений в движении. Я анализирую осанку, движения, привычки и возможные факторы, вызывающие напряжение. Вы получаете структурированную программу, корректирующие упражнения и понятные рекомендации, с которыми можно начинать сразу. При правильной оценке онлайн-формат работает так же эффективно, как очная встреча.",
       "programImage": "/images/services/consultation.jpg",
-      "keyBenefits": "Точная оценка, Персональный план восстановления, Доступно из любой точки мира, Подробные видео-инструкции, Эффективно без очного визита"
+      "keyBenefits": "Точная оценка, Персональная программа, Доступно из любой точки мира, Подробные видео-инструкции, Эффективно без очного визита"
     },
     {
       "_id": "2",
       "_createdDate": "2024-01-01T00:00:00.000Z",
       "_updatedDate": "2024-01-01T00:00:00.000Z",
       "programName": "Онлайн/офлайн занятия",
-      "shortDescription": "Персональные занятия для восстановления движений, улучшения осанки и укрепления слабых зон",
-      "fullDescription": "Занятия направлены на восстановление естественных паттернов движения, активацию стабилизирующих мышц и коррекцию привычек, которые вызывают компенсации и в дальнейшем приводят к боли. Каждое упражнение подбирается под ваше состояние и цели. Онлайн-формат столь же эффективен — я контролирую технику, корректирую движения в реальном времени и отслеживаю прогресс.",
+      "shortDescription": "Персональные занятия для улучшения движений, осанки и укрепления слабых зон",
+      "fullDescription": "Занятия направлены на восстановление естественных паттернов движения, активацию стабилизирующих мышц и коррекцию привычек, которые вызывают компенсации и в дальнейшем приводят к напряжению. Каждое упражнение подбирается под вашу ситуацию и цели. Онлайн-формат столь же эффективен — я контролирую технику, корректирую движения в реальном времени и отслеживаю прогресс.",
       "programImage": "/images/services/training.jpg",
       "keyBenefits": "Коррекция техники, Укрепление слабых зон, Улучшение паттернов движения, Коррекция осанки, Онлайн и офлайн"
     },
@@ -67,20 +67,20 @@
       "_createdDate": "2024-01-01T00:00:00.000Z",
       "_updatedDate": "2024-01-01T00:00:00.000Z",
       "programName": "Восстановительный массаж",
-      "shortDescription": "Глубокая восстановительная работа для расслабления мышц и улучшения подвижности",
-      "fullDescription": "Восстановительный массаж направлен на глубокую проработку мышц, фасций и триггерных зон. Он восстанавливает подвижность, улучшает кровообращение и снимает хроническое напряжение, которое возникает от тренировок, стресса или сидячей работы. Подходит как людям активно занимающимся спротом, так и людям ведущим обычную жизнь.",
+      "shortDescription": "Глубокая работа с телом для расслабления мышц и улучшения подвижности",
+      "fullDescription": "Спортивный массаж направлен на глубокую проработку мышц, фасций и триггерных зон. Он восстанавливает подвижность, улучшает кровообращение и снимает застарелое напряжение, которое возникает от тренировок, стресса или сидячей работы. Подходит как людям активно занимающимся спортом, так и людям ведущим обычную жизнь.",
       "programImage": "/images/services/massage.jpg",
-      "keyBenefits": "Работа с мышцами, Улучшение подвижности, Уменьшение боли, Быстрое восстановление, Проработка триггеров"
+      "keyBenefits": "Работа с мышцами, Улучшение подвижности, Снятие напряжения, Быстрое улучшение, Проработка триггеров"
     },
     {
       "_id": "4",
       "_createdDate": "2024-01-01T00:00:00.000Z",
       "_updatedDate": "2024-01-01T00:00:00.000Z",
       "programName": "Тейпирование",
-      "shortDescription": "Поддержка суставов и снижение боли с помощью кинезиотейпирования",
-      "fullDescription": "Тейпирование стабилизирует суставы, уменьшает нагрузку, снижает воспаление и поддерживает мышцы во время движения. Ленты наклеиваются с учётом анатомии и биомеханики, что помогает восстановлению после травм, уменьшает хроническую боль и улучшает качество движений.",
+      "shortDescription": "Поддержка суставов и снятие напряжения с помощью кинезиотейпирования",
+      "fullDescription": "Тейпирование стабилизирует суставы, уменьшает нагрузку и поддерживает мышцы во время движения. Ленты наклеиваются с учётом анатомии и биомеханики, что помогает улучшению после нагрузок, снижает застарелый дискомфорт и улучшает качество движений.",
       "programImage": "/images/services/taping.jpg",
-      "keyBenefits": "Поддержка суставов, Уменьшение боли, Снижение отёков, Улучшение движения, Реабилитация после травм"
+      "keyBenefits": "Поддержка суставов, Снятие напряжения, Снижение отёков, Улучшение движения, Поддержка после нагрузок"
     }
   ]
 }

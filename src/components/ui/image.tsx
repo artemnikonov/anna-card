@@ -1,15 +1,17 @@
-import { forwardRef, type ImgHTMLAttributes, useState } from 'react'
+import { forwardRef, type ImgHTMLAttributes } from 'react'
 import './image.css'
-
-const FALLBACK_IMAGE_URL = "/images/placeholder.jpg";
 
 export type ImageProps = ImgHTMLAttributes<HTMLImageElement> & {
   fittingType?: 'fill' | 'fit' | 'cover' | 'contain'
 }
 
-export const Image = forwardRef<HTMLImageElement, ImageProps>(({ src, fittingType = 'cover', className = '', loading = 'lazy', ...props }, ref) => {
-  const [imgSrc, setImgSrc] = useState<string | undefined>(src)
-
+export const Image = forwardRef<HTMLImageElement, ImageProps>(({
+  src,
+  fittingType = 'cover',
+  className = '',
+  loading = 'lazy',
+  ...props
+}, ref) => {
   if (!src) {
     return <div data-empty-image ref={ref as any} className={className} {...props as any} />
   }
@@ -22,10 +24,10 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(({ src, fittingTyp
   return (
     <img
       ref={ref}
-      src={imgSrc}
-      className={`${objectFitClass} ${className} select-none pointer-events-auto`}
+      src={src}
+      className={`${objectFitClass} ${className} select-none pointer-events-auto img-loading`}
       loading={loading}
-      onError={() => setImgSrc(FALLBACK_IMAGE_URL)}
+      decoding="async"
       onContextMenu={(e) => e.preventDefault()}
       draggable={false}
       {...props}

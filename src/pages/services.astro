@@ -3,7 +3,13 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import ServicesPage from '@/components/pages/ServicesPage';
 ---
 
-<MainLayout title="Services - Anna Zakernichnaia" description="Explore our movement therapy and posture recovery programs">
+<MainLayout title="Services - Anna Zakernichnaia" description="Explore our movement coaching and posture programs">
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/images/services/consultation.jpg" />
+    <link rel="preload" as="image" href="/images/services/training.jpg" />
+    <link rel="preload" as="image" href="/images/services/massage.jpg" />
+    <link rel="preload" as="image" href="/images/services/taping.jpg" />
+  </Fragment>
   <ServicesPage client:load />
 </MainLayout>
 

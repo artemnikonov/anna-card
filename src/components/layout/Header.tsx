@@ -10,11 +10,11 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState('');
-  const [isClient, setIsClient] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { t, language } = useTranslation();
 
   useEffect(() => {
-    setIsClient(true);
+    setMounted(true);
     setCurrentPath(window.location.pathname);
     setIsScrolled(window.scrollY > 50);
   }, []);
@@ -40,22 +40,20 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    // Prevent page scroll when mobile menu is open
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
   }, [isMobileMenuOpen]);
 
   const navigation = baseNavigation.map((item) => ({
-    name: isClient ? t.nav[item.key] : item.fallbackLabel,
-    href: isClient ? getLocalizedPath(item.path, language) : item.path,
+    name: t.nav[item.key as keyof typeof t.nav],
+    href: getLocalizedPath(item.path, language),
   }));
 
   const isActive = (path: string) => {
+    if (!mounted) return false;
     const normalizedPath = currentPath.replace(/^\/ru/, '') || '/';
     const normalizedHref = path.replace(/^\/ru/, '') || '/';
 
@@ -73,25 +71,25 @@ export default function Header() {
         <div className="container mx-auto px-4 sm:px-6 max-w-[100rem]">
           <div className="flex items-center justify-between h-20">
             <a
-              href={isClient ? getLocalizedPath('/', language) : '/'}
+              href={getLocalizedPath('/', language)}
               className="flex items-center space-x-2 sm:space-x-3 min-w-0"
             >
               <div className="w-8 sm:w-10 h-8 sm:h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
                 <span className="text-white font-heading font-bold text-sm sm:text-lg">AZ</span>
               </div>
-              <div>
-                <div className="font-heading font-bold text-gray-800 text-sm sm:text-lg">
+              <div className="min-w-0">
+                <div className="font-heading font-bold text-gray-800 text-sm sm:text-lg truncate">
                   Anna Zakernichnaia
                 </div>
-                <div className="font-paragraph text-xs text-blue-gray -mt-1">
-                  Posture & Pain Recovery
+                <div className="font-paragraph text-[10px] sm:text-xs text-blue-gray -mt-1 truncate max-w-[140px] sm:max-w-none" suppressHydrationWarning>
+                  {t.common.tagline}
                 </div>
               </div>
             </a>
 
-            <nav className="hidden lg:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center space-x-8" suppressHydrationWarning>
               {navigation.map((item) => {
-                const active = isClient && isActive(item.href);
+                const active = isActive(item.href);
                 return (
                   <a
                     key={item.href}
@@ -113,11 +111,9 @@ export default function Header() {
 
             <div className="hidden lg:flex items-center space-x-4">
               <LanguageSwitcher />
-              <a
-                href={isClient ? getLocalizedPath('/contact', language) : '/contact'}
-              >
-                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                  {isClient ? t.homepage.bookSession : 'Book Session'}
+              <a href={getLocalizedPath('/contact', language)}>
+                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground" suppressHydrationWarning>
+                  {t.homepage.bookSession}
                 </Button>
               </a>
             </div>
@@ -144,7 +140,7 @@ export default function Header() {
             style={{ animation: 'fadeIn 0.3s ease-out' }}
           />
           <div
-            className="fixed top-0 right-0 bottom-0 w-72 sm:w-80 bg-white z-[70] lg:hidden shadow-xl overflow-y-auto"
+            className="fixed top-0 right-0 bottom-0 w-[280px] sm:w-80 bg-white z-[70] lg:hidden shadow-xl overflow-y-auto"
             style={{ animation: 'slideInRight 0.3s ease-out' }}
           >
             <div className="flex flex-col min-h-full p-6">
@@ -160,9 +156,9 @@ export default function Header() {
                 </button>
               </div>
 
-              <nav className="flex flex-col space-y-2 py-6 flex-1">
+              <nav className="flex flex-col space-y-2 py-6 flex-1" suppressHydrationWarning>
                 {navigation.map((item) => {
-                  const active = isClient && isActive(item.href);
+                  const active = isActive(item.href);
                   return (
                     <a
                       key={item.href}
@@ -181,9 +177,9 @@ export default function Header() {
               </nav>
 
               <div className="border-t pt-6">
-                <a href={isClient ? getLocalizedPath('/contact', language) : '/contact'} onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                    {isClient ? t.homepage.bookSession : 'Book Session'}
+                <a href={getLocalizedPath('/contact', language)} onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" suppressHydrationWarning>
+                    {t.homepage.bookSession}
                   </Button>
                 </a>
               </div>

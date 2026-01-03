@@ -4,6 +4,12 @@ import ServicesPage from '@/components/pages/ServicesPage';
 ---
 
 <MainLayout title="Услуги - Анна Закерничная" description="Изучите наши программы двигательной терапии и восстановления осанки">
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/images/services/consultation.jpg" />
+    <link rel="preload" as="image" href="/images/services/training.jpg" />
+    <link rel="preload" as="image" href="/images/services/massage.jpg" />
+    <link rel="preload" as="image" href="/images/services/taping.jpg" />
+  </Fragment>
   <ServicesPage client:only="react" />
 </MainLayout>
 

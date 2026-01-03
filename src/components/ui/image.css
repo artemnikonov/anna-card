@@ -8,3 +8,8 @@ img {
   -moz-user-drag: none;
   -o-user-drag: none;
 }
+
+/* Simple gray background while image loads */
+.img-loading {
+  background-color: #f3f4f6;
+}

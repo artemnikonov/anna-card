@@ -32,12 +32,13 @@ export default function MethodologyPage() {
       </section>
 
       {/* Method Overview */}
-      <section className="py-24">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+      <section className="py-12 sm:py-16 md:py-24">
+        <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center mb-12 md:mb-20">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
               <h2 className="text-4xl font-heading font-bold text-gray-800 mb-6">
@@ -57,6 +58,7 @@ export default function MethodologyPage() {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="relative"
             >
@@ -77,6 +79,7 @@ export default function MethodologyPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="text-center mb-12 sm:mb-16"
           >
@@ -93,6 +96,7 @@ export default function MethodologyPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
             >
@@ -124,6 +128,7 @@ export default function MethodologyPage() {
                       className="flex items-center gap-3"
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                     >
                       <CheckCircle className="w-5 h-5 text-primary" />
@@ -146,8 +151,9 @@ export default function MethodologyPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center"
             >
               <div className="order-2 lg:order-1">
                 <Image
@@ -180,10 +186,17 @@ export default function MethodologyPage() {
                     t.methodology.planningItem4,
                     t.methodology.planningItem5
                   ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
+                    <motion.div
+                      key={index}
+                      className="flex items-center gap-3"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
                       <CheckCircle className="w-5 h-5 text-primary" />
                       <span className="font-paragraph text-gray-700">{item}</span>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
@@ -193,8 +206,9 @@ export default function MethodologyPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center"
             >
               <div>
                 <div className="flex items-center mb-6">
@@ -219,10 +233,17 @@ export default function MethodologyPage() {
                     t.methodology.monitoringItem4,
                     t.methodology.monitoringItem5
                   ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
+                    <motion.div
+                      key={index}
+                      className="flex items-center gap-3"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
                       <CheckCircle className="w-5 h-5 text-primary" />
                       <span className="font-paragraph text-gray-700">{item}</span>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
@@ -240,11 +261,12 @@ export default function MethodologyPage() {
       </section>
 
       {/* Why This Works */}
-      <section className="py-24">
-        <div className="container mx-auto px-6 max-w-7xl">
+      <section className="py-12 sm:py-16 md:py-24">
+        <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
@@ -278,10 +300,11 @@ export default function MethodologyPage() {
                 key={item.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <Card className="h-full text-center">
-                  <CardContent className="p-8">
+                  <CardContent className="p-6 sm:p-8">
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                       <item.icon className="w-8 h-8 text-primary" />
                     </div>
@@ -305,12 +328,13 @@ export default function MethodologyPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-6 leading-tight">
               {t.methodology.startToday}
             </h2>
-            <p className="text-lg sm:text-xl font-paragraph text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl font-paragraph text-white mb-8 max-w-2xl mx-auto leading-relaxed">
               {t.methodology.startTodaySubtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
