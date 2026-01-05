@@ -6,7 +6,10 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: 'https://annabody.studio',
   output: "static",
-  prefetch: false,
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: 'hover'
+  },
   i18n: {
     defaultLocale: "en",
     locales: ["en", "ru"],

@@ -19,8 +19,8 @@ export default {
                 '9xl': ['8rem', { lineHeight: '1', letterSpacing: '-0.05em', fontWeight: '900' }],
             },
             fontFamily: {
-                heading: ["montserrat", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
-                paragraph: ["lato-light", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"]
+                heading: "montserrat, system-ui, sans-serif",
+                paragraph: "montserrat, system-ui, sans-serif"
             },
             colors: {
                 'blue-gray': '#475569',

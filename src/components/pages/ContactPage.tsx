@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +8,26 @@ import { MapPin, Mail, Camera, MessageCircle, Clock, Send } from 'lucide-react';
 
 export default function ContactPage() {
   const { t } = useTranslation();
+  const [isReady, setIsReady] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
+
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (isReady) return;
+    const timer = setTimeout(() => setShowSpinner(true), 1000);
+    return () => clearTimeout(timer);
+  }, [isReady]);
+
+  if (!isReady) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        {showSpinner && <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
@@ -242,7 +263,7 @@ export default function ContactPage() {
               <Card className="h-full">
                 <CardContent className="p-0">
                   <Image
-                    src="/images/contact/recovery-studio.jpg"
+                    src="/images/contact/recovery-studio.webp"
                     alt="Private practice space in Limassol, Cyprus"
                     width={600}
                     className="w-full h-64 object-cover rounded-t-lg"

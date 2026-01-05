@@ -16,7 +16,7 @@ interface Props {
 const {
   title = 'Anna Zakernichnaia - Posture & Movement Coaching',
   description = 'Anna Zakernichnaia - Movement Coaching & Posture Specialist',
-  image = '/images/og-image.jpg',
+  image = '/images/og-image.webp',
   canonical = Astro.url.pathname
 } = Astro.props;
 
@@ -40,6 +40,14 @@ const imageURL = new URL(image, Astro.site);
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
 
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//static.parastorage.com" />
+    <link rel="preconnect" href="//static.parastorage.com" crossorigin />
+
+    <!-- Preload Montserrat font to prevent FOUT -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="//static.parastorage.com/tag-bundler/api/v1/fonts-cache/googlefont/woff2/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="//static.parastorage.com/tag-bundler/api/v1/fonts-cache/googlefont/woff2/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459W1hyyTh89ZNpQ.woff2" />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
@@ -60,6 +68,14 @@ const imageURL = new URL(image, Astro.site);
 
     <slot name="head" />
     <ClientRouter />
+
+    <!-- Umami Analytics -->
+    <script
+      is:inline
+      defer
+      src="/stats/script.js"
+      data-website-id="bbf062e9-7570-4278-ba92-ca68c381f42d"
+    ></script>
 
     <script is:inline>
       if (!window.__astroScrollToTopInitialized) {
@@ -114,7 +130,7 @@ const imageURL = new URL(image, Astro.site);
   <body>
     <div class="page-shell min-h-screen bg-white flex flex-col">
       <div transition:persist="header">
-        <Header client:load />
+        <Header client:idle />
       </div>
 
       <main class="pt-20 flex-1 min-h-[60vh]">
@@ -122,7 +138,7 @@ const imageURL = new URL(image, Astro.site);
       </main>
 
       <div transition:persist="footer">
-        <Footer client:load />
+        <Footer client:idle />
       </div>
     </div>
 

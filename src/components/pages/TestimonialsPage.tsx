@@ -13,6 +13,7 @@ import { getLocalizedPath } from '@/lib/i18n';
 export default function TestimonialsPage() {
     const [testimonials, setTestimonials] = useState<Testimonials[]>([]);
     const [loading, setLoading] = useState(true);
+    const [showSpinner, setShowSpinner] = useState(false);
     const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
     const { t, language } = useTranslation();
     const disclaimer = DataService.getTestimonialsDisclaimer(language);
@@ -47,16 +48,19 @@ export default function TestimonialsPage() {
         fetchTestimonials();
     }, [language]);
 
+    useEffect(() => {
+        if (!loading) return;
+        const timer = setTimeout(() => setShowSpinner(true), 1000);
+        return () => clearTimeout(timer);
+    }, [loading]);
+
     const MAX_LENGTH = 420;
     const shouldTruncate = (text: string) => text.length > MAX_LENGTH;
 
     if (loading) {
         return (
             <div className="min-h-screen bg-white flex items-center justify-center">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-                    <p className="font-paragraph text-blue-gray">{t.common.loading}</p>
-                </div>
+                {showSpinner && <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>}
             </div>
         );
     }

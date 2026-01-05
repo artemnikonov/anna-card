@@ -19,7 +19,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy custom nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Copy built files from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
@@ -28,7 +28,7 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 RUN chmod -R 755 /usr/share/nginx/html && \
     find /usr/share/nginx/html -type f -exec chmod 644 {} \;
 
-# Expose port 80
+# Expose port (SSL handled by Traefik)
 EXPOSE 80
 
 # Start nginx

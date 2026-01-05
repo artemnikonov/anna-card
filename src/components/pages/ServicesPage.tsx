@@ -12,6 +12,7 @@ import { getLocalizedPath } from '@/lib/i18n';
 export default function ServicesPage() {
   const [programs, setPrograms] = useState<Programs[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showSpinner, setShowSpinner] = useState(false);
   const [hasError, setHasError] = useState(false);
   const { t, language } = useTranslation();
 
@@ -32,15 +33,16 @@ export default function ServicesPage() {
     fetchPrograms();
   }, [language]);
 
-
+  useEffect(() => {
+    if (!loading) return;
+    const timer = setTimeout(() => setShowSpinner(true), 1000);
+    return () => clearTimeout(timer);
+  }, [loading]);
 
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="font-paragraph text-blue-gray">{t.common.loading}</p>
-        </div>
+        {showSpinner && <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>}
       </div>
     );
   }

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -10,6 +11,26 @@ import { getLocalizedPath } from '@/lib/i18n';
 
 export default function HomePage() {
   const { t, language } = useTranslation();
+  const [isReady, setIsReady] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
+
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (isReady) return;
+    const timer = setTimeout(() => setShowSpinner(true), 1000);
+    return () => clearTimeout(timer);
+  }, [isReady]);
+
+  if (!isReady) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        {showSpinner && <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
@@ -25,7 +46,7 @@ export default function HomePage() {
               className="mb-12"
             >
               <Image
-                src="/images/home/anna-avatar.jpg"
+                src="/images/home/anna-avatar.webp"
                 width={250}
                 height={250}
                 loading="eager"
@@ -224,7 +245,7 @@ export default function HomePage() {
             >
               <div className="relative overflow-hidden rounded-2xl">
                 <Image
-                  src="/images/home/portrait.jpg"
+                  src="/images/home/portrait.webp"
                   alt="Anna Z. - Professional Portrait"
                   width={600}
                   className="w-full h-96 object-cover"

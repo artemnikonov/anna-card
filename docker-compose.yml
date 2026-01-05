@@ -1,47 +1,28 @@
-version: '3.8'
-
 services:
-  web:
+  nginx:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: anna-card
-    ports:
-      - "80:80"
     restart: unless-stopped
-    environment:
-      - NODE_ENV=production
+    networks:
+      - web
+      - umami_default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.anna-card.rule=Host(`annabody.studio`) || Host(`www.annabody.studio`)"
+      - "traefik.http.routers.anna-card.entrypoints=websecure"
+      - "traefik.http.routers.anna-card.tls=true"
+      - "traefik.http.routers.anna-card.tls.certresolver=letsencrypt"
+      - "traefik.http.services.anna-card.loadbalancer.server.port=80"
+      # Redirect www to non-www
+      - "traefik.http.middlewares.anna-www-redirect.redirectregex.regex=^https://www\\.annabody\\.studio/(.*)"
+      - "traefik.http.middlewares.anna-www-redirect.redirectregex.replacement=https://annabody.studio/$${1}"
+      - "traefik.http.middlewares.anna-www-redirect.redirectregex.permanent=true"
+      - "traefik.http.routers.anna-card.middlewares=anna-www-redirect"
 
-  umami:
-    image: ghcr.io/umami-software/umami:postgresql-latest
-    container_name: umami
-    ports:
-      - "3000:3000"
-    environment:
-      DATABASE_URL: postgresql://umami:umami_password@umami-db:5432/umami
-      DATABASE_TYPE: postgresql
-      APP_SECRET: replace-me-with-random-string
-    depends_on:
-      umami-db:
-        condition: service_healthy
-    restart: unless-stopped
-
-  umami-db:
-    image: postgres:15-alpine
-    container_name: umami-db
-    environment:
-      POSTGRES_DB: umami
-      POSTGRES_USER: umami
-      POSTGRES_PASSWORD: umami_password
-    volumes:
-      - umami-db-data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U umami"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
-volumes:
-  umami-db-data:
-
+networks:
+  web:
+    external: true
+  umami_default:
+    external: true

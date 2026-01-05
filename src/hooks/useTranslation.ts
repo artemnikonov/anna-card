@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { translations } from '@/lib/translations';
 import type { Translation } from '@/lib/translations';
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { defaultLocale, getLocaleFromPathname, type Locale } from '@/lib/i18n';
 
 interface LanguageStore {

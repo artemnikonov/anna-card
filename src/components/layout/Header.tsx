@@ -78,10 +78,10 @@ export default function Header() {
                 <span className="text-white font-heading font-bold text-sm sm:text-lg">AZ</span>
               </div>
               <div className="min-w-0">
-                <div className="font-heading font-bold text-gray-800 text-sm sm:text-lg truncate">
+                <div className="font-heading font-bold text-gray-800 text-sm sm:text-lg whitespace-nowrap">
                   Anna Zakernichnaia
                 </div>
-                <div className="font-paragraph text-[10px] sm:text-xs text-blue-gray -mt-1 truncate max-w-[140px] sm:max-w-none" suppressHydrationWarning>
+                <div className="font-paragraph text-[10px] sm:text-xs text-blue-gray -mt-1 whitespace-nowrap" suppressHydrationWarning>
                   {t.common.tagline}
                 </div>
               </div>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,6 +10,26 @@ import { getLocalizedPath } from '@/lib/i18n';
 
 export default function MethodologyPage() {
   const { t, language } = useTranslation();
+  const [isReady, setIsReady] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
+
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (isReady) return;
+    const timer = setTimeout(() => setShowSpinner(true), 1000);
+    return () => clearTimeout(timer);
+  }, [isReady]);
+
+  if (!isReady) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        {showSpinner && <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
@@ -63,7 +84,7 @@ export default function MethodologyPage() {
               className="relative"
             >
               <Image
-                src="/images/methodology/overview.jpg"
+                src="/images/methodology/overview.webp"
                 alt="Anna Z. demonstrating assessment techniques"
                 width={600}
                 className="w-full h-96 object-cover rounded-lg shadow-lg"
@@ -139,7 +160,7 @@ export default function MethodologyPage() {
               </div>
               <div>
                 <Image
-                  src="/images/methodology/assessment.jpg"
+                  src="/images/methodology/assessment.webp"
                   alt="Comprehensive assessment process"
                   width={600}
                   className="w-full h-80 object-cover rounded-lg shadow-lg"
@@ -157,7 +178,7 @@ export default function MethodologyPage() {
             >
               <div className="order-2 lg:order-1">
                 <Image
-                  src="/images/methodology/planning.jpg"
+                  src="/images/methodology/planning.webp"
                   alt="Personalized movement plan development"
                   width={600}
                   className="w-full h-80 object-cover rounded-lg shadow-lg"
@@ -249,7 +270,7 @@ export default function MethodologyPage() {
               </div>
               <div>
                 <Image
-                  src="/images/methodology/monitoring.jpg"
+                  src="/images/methodology/monitoring.webp"
                   alt="Progress tracking and monitoring"
                   width={600}
                   className="w-full h-80 object-cover rounded-lg shadow-lg"
