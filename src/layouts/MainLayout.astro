@@ -9,18 +9,29 @@ import { getLocaleFromUrl } from '@/lib/i18n';
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string;
   image?: string;
   canonical?: string;
 }
 
+const locale = getLocaleFromUrl(Astro.url);
+
+const defaultKeywords = locale === 'ru'
+  ? 'массаж Лимассол, массаж Кипр, коррекция осанки, работа с телом, wellness Кипр, спортивный массаж, Лимассол'
+  : 'massage Limassol, massage Cyprus, posture correction, movement coaching, wellness Cyprus, sports massage, bodywork, Limassol';
+
 const {
-  title = 'Anna Zakernichnaia - Posture & Movement Coaching',
-  description = 'Anna Zakernichnaia - Movement Coaching & Posture Specialist',
+  title = locale === 'ru'
+    ? 'Массаж и коррекция осанки в Лимассоле | Анна Закерничная'
+    : 'Massage & Posture Coaching in Limassol, Cyprus | Anna Zakernichnaia',
+  description = locale === 'ru'
+    ? 'Профессиональный массаж и работа с телом в Лимассоле, Кипр. Индивидуальные сеансы для улучшения осанки и подвижности.'
+    : 'Professional massage and bodywork in Limassol, Cyprus. Private sessions for posture improvement and mobility.',
+  keywords = defaultKeywords,
   image = '/images/og-image.webp',
   canonical = Astro.url.pathname
 } = Astro.props;
 
-const locale = getLocaleFromUrl(Astro.url);
 const canonicalURL = new URL(canonical, Astro.site);
 const imageURL = new URL(image, Astro.site);
 ---
@@ -64,7 +75,7 @@ const imageURL = new URL(image, Astro.site);
 
     <!-- Additional SEO -->
     <meta name="author" content="Anna Zakernichnaia" />
-    <meta name="keywords" content="posture coaching, movement training, posture correction, body alignment, mobility, functional movement, Cyprus" />
+    <meta name="keywords" content={keywords} />
 
     <slot name="head" />
     <ClientRouter />

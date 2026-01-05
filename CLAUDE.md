@@ -79,3 +79,8 @@ Use `@/` for imports from `/src/`:
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 ```
+
+## Important Rules
+
+1. **No auto-deploy/commit** - Never run `./deploy.sh` or `git commit` unless explicitly asked
+2. **No medical terminology** - Avoid words like: therapy, therapeutic, treatment, лечение, терапия, терапевтический. Use: coaching, training, massage, работа с телом, массаж
