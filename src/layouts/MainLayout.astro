@@ -17,16 +17,16 @@ interface Props {
 const locale = getLocaleFromUrl(Astro.url);
 
 const defaultKeywords = locale === 'ru'
-  ? 'массаж Лимассол, массаж Кипр, коррекция осанки, работа с телом, wellness Кипр, спортивный массаж, Лимассол'
-  : 'massage Limassol, massage Cyprus, posture correction, movement coaching, wellness Cyprus, sports massage, bodywork, Limassol';
+  ? 'коррекция осанки Лимассол, работа с телом Кипр, улучшение подвижности, wellness Кипр, Лимассол'
+  : 'posture correction Limassol, movement coaching Cyprus, bodywork, wellness Cyprus, Limassol';
 
 const {
   title = locale === 'ru'
-    ? 'Массаж и коррекция осанки в Лимассоле | Анна Закерничная'
-    : 'Massage & Posture Coaching in Limassol, Cyprus | Anna Zakernichnaia',
+    ? 'Коррекция осанки и работа с телом в Лимассоле | Анна Закерничная'
+    : 'Posture & Movement Coaching in Limassol, Cyprus | Anna Zakernichnaia',
   description = locale === 'ru'
-    ? 'Профессиональный массаж и работа с телом в Лимассоле, Кипр. Индивидуальные сеансы для улучшения осанки и подвижности.'
-    : 'Professional massage and bodywork in Limassol, Cyprus. Private sessions for posture improvement and mobility.',
+    ? 'Профессиональная работа с телом в Лимассоле, Кипр. Индивидуальные сеансы для улучшения осанки и подвижности.'
+    : 'Professional posture and movement coaching in Limassol, Cyprus. Private sessions for posture improvement and mobility.',
   keywords = defaultKeywords,
   image = '/images/og-image.webp',
   canonical = Astro.url.pathname
@@ -34,6 +34,48 @@ const {
 
 const canonicalURL = new URL(canonical, Astro.site);
 const imageURL = new URL(image, Astro.site);
+
+// Hreflang URLs for multilingual SEO
+const currentPath = Astro.url.pathname;
+const isRussian = currentPath.startsWith('/ru');
+const basePath = isRussian ? currentPath.replace(/^\/ru/, '') || '/' : currentPath;
+const enURL = new URL(basePath, Astro.site);
+const ruURL = new URL(`/ru${basePath === '/' ? '' : basePath}`, Astro.site);
+
+// JSON-LD Structured Data
+const baseJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Anna Zakernichnaia - Posture & Movement Coach",
+  "description": locale === 'ru'
+    ? "Профессиональная коррекция осанки и работа с телом в Лимассоле, Кипр"
+    : "Professional posture and movement coaching in Limassol, Cyprus",
+  "url": "https://annabody.studio",
+  "image": "https://annabody.studio/images/og-image.webp",
+  "telephone": "+79267291313",
+  "email": "ann.massage@icloud.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Limassol",
+    "addressCountry": "CY"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "34.7071",
+    "longitude": "33.0226"
+  },
+  "priceRange": "$$",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "opens": "09:00",
+    "closes": "20:00"
+  },
+  "sameAs": [
+    "https://t.me/AnnaZakernichnaia",
+    "https://www.instagram.com/annabody.studio"
+  ]
+};
 ---
 
 <!doctype html>
@@ -50,6 +92,14 @@ const imageURL = new URL(image, Astro.site);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
+
+    <!-- Hreflang for multilingual SEO -->
+    <link rel="alternate" hreflang="en" href={enURL} />
+    <link rel="alternate" hreflang="ru" href={ruURL} />
+    <link rel="alternate" hreflang="x-default" href={enURL} />
+
+    <!-- JSON-LD Structured Data -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(baseJsonLd)} />
 
     <!-- DNS prefetch for external resources -->
     <link rel="dns-prefetch" href="//static.parastorage.com" />

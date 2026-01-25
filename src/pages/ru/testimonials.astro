@@ -1,13 +1,12 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import TestimonialsPage from '@/components/pages/TestimonialsPage';
+import TestimonialsContent from '@/components/content/TestimonialsContent.astro';
 ---
 
 <MainLayout
-  title="Отзывы клиентов - Массаж в Лимассоле | Анна Закерничная"
-  description="Читайте отзывы клиентов, которые улучшили осанку и подвижность благодаря массажу и работе с телом в Лимассоле."
-  keywords="отзывы о массаже Лимассол, отзывы клиентов Кипр, результаты коррекции осанки, отзывы массаж"
+  title="Отзывы клиентов - Работа с телом в Лимассоле | Анна Закерничная"
+  description="Читайте отзывы клиентов, которые улучшили осанку и подвижность благодаря работе с телом в Лимассоле."
+  keywords="отзывы работа с телом Лимассол, отзывы клиентов Кипр, результаты коррекции осанки"
 >
-  <TestimonialsPage client:idle />
+  <TestimonialsContent />
 </MainLayout>
-

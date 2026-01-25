@@ -64,6 +64,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors"
+                aria-label="Telegram: @AnnaZakernichnaia"
               >
                 <Send className="w-5 h-5 text-primary" />
                 <span className="font-paragraph">@AnnaZakernichnaia</span>
@@ -73,6 +74,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors"
+                aria-label="WhatsApp: +7 926 729 1313"
               >
                 <MessageCircle className="w-5 h-5 text-primary" />
                 <span className="font-paragraph">{t.contact.phoneValue}</span>
@@ -80,6 +82,7 @@ export default function Footer() {
               <a
                 href="mailto:ann.massage@icloud.com"
                 className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors"
+                aria-label="Email: ann.massage@icloud.com"
               >
                 <Mail className="w-5 h-5 text-primary" />
                 <span className="font-paragraph">{t.contact.emailValue}</span>
@@ -113,7 +116,7 @@ export default function Footer() {
                 <MessageCircle className="w-5 h-5" />
               </a>
               <a
-                href="https://www.instagram.com/massage.anna_z"
+                href="https://www.instagram.com/annabody.studio"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors"

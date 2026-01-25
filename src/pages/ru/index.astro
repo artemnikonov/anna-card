@@ -1,16 +1,15 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import HomePage from '@/components/pages/HomePage';
+import HomeContent from '@/components/content/HomeContent.astro';
 ---
 
 <MainLayout
-  title="Массаж и коррекция осанки в Лимассоле, Кипр | Анна Закерничная"
-  description="Профессиональный массаж и работа с телом в Лимассоле. Индивидуальные сеансы для коррекции осанки и улучшения подвижности. Запишитесь на приём."
-  keywords="массаж Лимассол, массаж Кипр, коррекция осанки, работа с телом, wellness Кипр, спортивный массаж"
+  title="Коррекция осанки и работа с телом в Лимассоле | Анна Закерничная"
+  description="Профессиональная работа с телом в Лимассоле. Индивидуальные сеансы для коррекции осанки и улучшения подвижности. Запишитесь на приём."
+  keywords="коррекция осанки Лимассол, работа с телом Кипр, улучшение подвижности, wellness Кипр"
 >
   <Fragment slot="head">
     <link rel="preload" as="image" href="/images/home/anna-avatar.webp" />
   </Fragment>
-  <HomePage client:idle />
+  <HomeContent />
 </MainLayout>
-

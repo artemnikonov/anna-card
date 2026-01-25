@@ -1,13 +1,12 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import ContactPage from '@/components/pages/ContactPage';
+import ContactContent from '@/components/content/ContactContent.astro';
 ---
 
 <MainLayout
-  title="Контакты - Массаж в Лимассоле, Кипр | Анна Закерничная"
-  description="Запишитесь на массаж или сеанс коррекции осанки в Лимассоле. Приватная студия, гибкий график. Свяжитесь с Анной для профессионального массажа."
-  keywords="записаться на массаж Лимассол, массаж Кипр, контакты массаж Лимассол, запись на массаж"
+  title="Контакты - Работа с телом в Лимассоле | Анна Закерничная"
+  description="Запишитесь на сеанс работы с телом или коррекции осанки в Лимассоле. Приватная студия, гибкий график."
+  keywords="записаться на сеанс Лимассол, работа с телом Кипр, контакты Лимассол, запись"
 >
-  <ContactPage client:idle />
+  <ContactContent />
 </MainLayout>
-

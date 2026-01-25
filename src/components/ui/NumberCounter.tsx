@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useInView } from 'framer-motion';
 
 interface NumberCounterProps {
@@ -7,6 +7,7 @@ interface NumberCounterProps {
   suffix?: string;
   prefix?: string;
   className?: string;
+  children?: ReactNode; // SSR fallback
 }
 
 export default function NumberCounter({
@@ -14,9 +15,10 @@ export default function NumberCounter({
   duration = 1.2,
   suffix = '',
   prefix = '',
-  className = ''
+  className = '',
+  children
 }: NumberCounterProps) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number | null>(null);
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -24,6 +26,7 @@ export default function NumberCounter({
   useEffect(() => {
     if (isInView && !hasAnimated) {
       setHasAnimated(true);
+      setCount(0);
       let startTime: number | null = null;
       const startValue = 0;
 
@@ -34,7 +37,7 @@ export default function NumberCounter({
 
         // Easing function (easeOutExpo)
         const easeOutExpo = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-        
+
         const currentCount = Math.floor(easeOutExpo * (end - startValue) + startValue);
         setCount(currentCount);
 
@@ -49,10 +52,18 @@ export default function NumberCounter({
     }
   }, [isInView, end, duration, hasAnimated]);
 
+  // Show children (SSR fallback) until animation starts
+  if (count === null) {
+    return (
+      <span ref={ref} className={className}>
+        {children || `${prefix}${end}${suffix}`}
+      </span>
+    );
+  }
+
   return (
     <span ref={ref} className={className}>
       {prefix}{count}{suffix}
     </span>
   );
 }
-

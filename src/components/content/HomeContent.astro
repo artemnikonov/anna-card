@@ -1,0 +1,265 @@
+---
+import { getLocaleFromUrl, getTranslations, getLocalizedPath } from '@/lib/i18n';
+import { AnimatedSection } from '@/components/ui/AnimatedSection';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import NumberCounter from '@/components/ui/NumberCounter';
+import GlowButton from '@/components/ui/GlowButton';
+import { CheckCircle, Users, TrendingUp, Clock } from 'lucide-react';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = getTranslations(locale);
+
+const services = [
+  { title: t.homepage.postureCorrection, description: t.homepage.postureCorrectionDesc },
+  { title: t.homepage.deskWorkerRecovery, description: t.homepage.deskWorkerRecoveryDesc },
+  { title: t.homepage.mobilityRehab, description: t.homepage.mobilityRehabDesc },
+  { title: t.homepage.painReliefCoaching, description: t.homepage.painReliefCoachingDesc }
+];
+---
+
+<div class="min-h-screen bg-white overflow-x-hidden">
+  <!-- Hero Section -->
+  <section class="relative flex flex-col items-center justify-center min-h-[90vh] overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-gray/5 to-olive-accent/5"></div>
+    <div class="container mx-auto px-4 sm:px-6 text-center relative z-10 max-w-7xl">
+      <div class="space-y-8">
+        <AnimatedSection client:visible animation="scale">
+          <div class="mb-12">
+            <img
+              src="/images/home/anna-avatar.webp"
+              width="250"
+              height="250"
+              loading="eager"
+              class="w-40 sm:w-48 md:w-64 h-40 sm:h-48 md:h-64 rounded-full mx-auto mb-8 object-cover object-[20%_30%] shadow-sm border-4 border-white/20 select-none"
+              alt="Anna Z. - Professional Portrait"
+            />
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection client:visible animation="fadeUp" delay={0.2}>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-gray-800 mb-6 leading-[0.9]">
+            {t.homepage.heroTitle}
+          </h1>
+        </AnimatedSection>
+
+        <AnimatedSection client:visible animation="fadeUp" delay={0.4}>
+          <p class="text-base sm:text-lg md:text-xl font-paragraph text-blue-gray max-w-3xl mx-auto mb-8">
+            {t.homepage.heroSubtitle}
+          </p>
+        </AnimatedSection>
+
+        <AnimatedSection client:visible animation="fadeUp" delay={0.6}>
+          <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center w-full sm:w-auto px-4 sm:px-0">
+            <GlowButton
+              href={getLocalizedPath('/contact', locale)}
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium w-full sm:w-auto"
+              client:idle
+            >
+              {t.homepage.bookSession}
+            </GlowButton>
+            <a href={getLocalizedPath('/about', locale)} class="w-full sm:w-auto" aria-label={t.homepage.ariaLearnMoreAboutAnna}>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-primary text-primary hover:bg-primary/5 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium w-full"
+                client:idle
+              >
+                {t.homepage.learnMore}
+              </Button>
+            </a>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection client:visible animation="fadeUp" delay={0.8}>
+          <button
+            type="button"
+            id="scroll-hint-button"
+            class="mt-8 sm:mt-12 mx-auto flex flex-col items-center gap-2 text-blue-gray/70 hover:text-blue-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            aria-label={t.homepage.heroScrollHint}
+          >
+            <span class="text-[10px] sm:text-xs tracking-[0.18em] text-blue-gray/60 text-center">
+              {t.homepage.heroScrollHint}
+            </span>
+            <span class="w-[1px] h-8 sm:h-10 bg-gradient-to-b from-transparent via-blue-gray/50 to-blue-gray/80"></span>
+          </button>
+        </AnimatedSection>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Stats -->
+  <section id="homepage-main-content" class="py-12 sm:py-16 md:py-24 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+        <AnimatedSection client:visible animation="fadeUp" delay={0}>
+          <div class="text-center group cursor-default">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+              <Users className="w-8 h-8 text-primary" client:idle />
+            </div>
+            <h3 class="text-3xl font-heading font-bold text-gray-800 mb-2">
+              <NumberCounter end={1000} suffix="+" duration={1.5} client:load>1000+</NumberCounter>
+            </h3>
+            <p class="font-paragraph text-blue-gray">{t.homepage.clientsHelped}</p>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection client:visible animation="fadeUp" delay={0.1}>
+          <div class="text-center group cursor-default">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+              <TrendingUp className="w-8 h-8 text-primary" client:idle />
+            </div>
+            <h3 class="text-3xl font-heading font-bold text-gray-800 mb-2">
+              <NumberCounter end={9} suffix="+" duration={1} client:load>9+</NumberCounter>
+            </h3>
+            <p class="font-paragraph text-blue-gray">{t.homepage.yearsExperience}</p>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection client:visible animation="fadeUp" delay={0.3}>
+          <div class="text-center group cursor-default">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+              <CheckCircle className="w-8 h-8 text-primary" client:idle />
+            </div>
+            <h3 class="text-3xl font-heading font-bold text-gray-800 mb-2">
+              <NumberCounter end={100} suffix="%" duration={1.2} client:load>100%</NumberCounter>
+            </h3>
+            <p class="font-paragraph text-blue-gray">{t.homepage.personalized}</p>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection client:visible animation="fadeUp" delay={0.4}>
+          <div class="text-center group cursor-default">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+              <Clock className="w-8 h-8 text-primary" client:idle />
+            </div>
+            <h3 class="text-3xl font-heading font-bold text-gray-800 mb-2">{t.homepage.averageRecoveryNumber}</h3>
+            <p class="font-paragraph text-blue-gray">{t.homepage.averageRecovery}</p>
+          </div>
+        </AnimatedSection>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Preview -->
+  <section class="py-12 sm:py-16 md:py-24 bg-white border-t border-gray-100">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <AnimatedSection client:visible animation="fadeLeft">
+          <div class="text-center lg:text-left">
+            <h2 class="text-3xl sm:text-4xl font-heading font-bold text-gray-800 mb-6 leading-snug">
+              {t.homepage.meetAnna}
+            </h2>
+            <p class="text-base sm:text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
+              {t.homepage.aboutAnnaText1}
+            </p>
+            <p class="text-base sm:text-lg font-paragraph text-blue-gray mb-8 leading-relaxed">
+              {t.homepage.aboutAnnaText2}
+            </p>
+            <a href={getLocalizedPath('/about', locale)} aria-label={t.homepage.ariaLearnMoreAboutAnna}>
+              <Button variant="outline" className="border-primary text-primary hover:bg-primary/5" client:idle>
+                {t.homepage.learnMoreAboutAnna}
+              </Button>
+            </a>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection client:visible animation="fadeRight">
+          <div class="relative">
+            <div class="relative overflow-hidden rounded-2xl">
+              <img
+                src="/images/home/portrait.webp"
+                alt="Anna Z. - Professional Portrait"
+                width="600"
+                class="w-full h-96 object-cover select-none"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+            </div>
+          </div>
+        </AnimatedSection>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Preview -->
+  <section class="py-12 sm:py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white border-t border-gray-100">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <div class="text-center mb-12 sm:mb-16">
+          <h2 class="text-3xl sm:text-4xl font-heading font-bold text-gray-800 mb-6 leading-tight">
+            {t.homepage.specializedPrograms}
+          </h2>
+          <p class="text-base sm:text-lg font-paragraph text-blue-gray max-w-3xl mx-auto leading-relaxed">
+            {t.homepage.specializedProgramsSubtitle}
+          </p>
+        </div>
+      </AnimatedSection>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        {services.map((service, index) => (
+          <AnimatedSection client:visible animation="fadeUp" delay={index * 0.1}>
+            <Card className="h-full hover:shadow-2xl transition-all duration-300 group border border-gray-200 hover:border-primary/30 bg-white" client:idle>
+              <CardContent className="p-5 sm:p-6 text-center" client:idle>
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-gray-800 mb-3 group-hover:text-primary transition-colors duration-300 leading-tight">
+                  {service.title}
+                </h3>
+                <p class="font-paragraph text-sm sm:text-base text-blue-gray leading-relaxed">
+                  {service.description}
+                </p>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+        ))}
+      </div>
+
+      <AnimatedSection client:visible animation="fadeUp" delay={0.4}>
+        <div class="text-center mt-12">
+          <a href={getLocalizedPath('/services', locale)} aria-label={t.homepage.ariaViewAllPrograms}>
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3" client:idle>
+              {t.homepage.viewAllPrograms}
+            </Button>
+          </a>
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-12 sm:py-16 md:py-24 bg-primary">
+    <div class="container mx-auto px-4 sm:px-6 text-center max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <h2 class="text-3xl sm:text-4xl font-heading font-bold text-white mb-6 leading-tight">
+          {t.homepage.readyToStart}
+        </h2>
+        <p class="text-lg sm:text-xl font-paragraph text-white mb-8 max-w-2xl mx-auto leading-relaxed">
+          {t.homepage.readyToStartSubtitle}
+        </p>
+        <a href={getLocalizedPath('/contact', locale)} class="inline-block" aria-label={t.homepage.ariaBookYourSession}>
+          <Button
+            size="lg"
+            variant="outline"
+            className="border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-base sm:text-lg font-medium"
+            client:idle
+          >
+            {t.homepage.bookYourSession}
+          </Button>
+        </a>
+      </AnimatedSection>
+    </div>
+  </section>
+</div>
+
+<script>
+  document.getElementById('scroll-hint-button')?.addEventListener('click', () => {
+    const nextSection = document.querySelector('#homepage-main-content');
+    if (nextSection) {
+      const headerOffset = 80;
+      const elementPosition = nextSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+  });
+</script>

@@ -281,7 +281,7 @@ export const translations: Record<Locale, Translation> = {
       averageRecovery: "Average Progress Time",
       averageRecoveryNumber: "3-6 Weeks",
       meetAnna: "Meet Anna Zakernichnaia",
-      aboutAnnaText1: "For over 8 years, I've been helping people return to activity after setbacks. I work with complex and long-standing issues to restore quality of life and freedom of movement. My method is based on reflex techniques, working with compensation points, and movement patterns.",
+      aboutAnnaText1: "For over 9 years, I've been helping people return to activity after setbacks. I work with complex and long-standing issues to restore quality of life and freedom of movement. My method is based on reflex techniques, working with compensation points, and movement patterns.",
       aboutAnnaText2: "I work not with isolated signals, but with the root causes of discomfort — through restoring natural movement patterns, posture correction, and mobility development.",
       learnMoreAboutAnna: "Learn More About Anna Zakernichnaia",
       specializedPrograms: "Specialized Movement Programs",
@@ -307,7 +307,7 @@ export const translations: Record<Locale, Translation> = {
       title: "Meet Anna Zakernichnaia",
       subtitle: "Dedicated to helping you achieve functional restoration through movement, posture re-education, and mobility work.",
       partnerInRecovery: "Your Guide to Better Movement",
-      aboutText1: "With over 8 years of experience in movement coaching and restoration, I've dedicated my career to helping individuals address persistent tension and movement limitations. My approach combines evidence-based techniques with personalized care to address the root causes of imbalances.",
+      aboutText1: "With over 9 years of experience in movement coaching and restoration, I've dedicated my career to helping individuals address persistent tension and movement limitations. My approach combines evidence-based techniques with personalized care to address the root causes of imbalances.",
       aboutText2: "I believe that every person has the potential to move better, feel stronger, and live with ease. Through functional movement patterns, posture correction, and targeted mobility work, I guide my clients on a journey from discomfort to performance.",
       aboutText3: "My philosophy is simple: work with the whole person, not just isolated areas. By understanding your unique movement patterns, lifestyle, and goals, I create personalized programs that deliver lasting results.",
       startYourJourney: "Start Your Journey",
@@ -321,7 +321,7 @@ export const translations: Record<Locale, Translation> = {
       mobilityWorkDesc: "Restore and enhance your range of motion through targeted exercises that address restrictions and imbalances.",
       qualifications: "Qualifications & Experience",
       qualificationsSubtitle: "Committed to continuous learning and staying current with the latest evidence-based practices in movement coaching and restoration.",
-      experienceYears: "8+ Years Experience",
+      experienceYears: "9+ Years Experience",
       experienceYearsDesc: "Extensive experience working with diverse populations and conditions",
       continuingEducation: "Continuing Education",
       continuingEducationDesc: "Regular training in latest restoration techniques and methodologies",
@@ -484,7 +484,7 @@ export const translations: Record<Locale, Translation> = {
       phoneAndWhatsapp: "Phone & WhatsApp",
       responseTime: "Response Time",
       responseTimeValue: "Within 24 hours",
-      emergencyConsultations: "Emergency consultations available",
+      emergencyConsultations: "Flexible scheduling available",
       recoveryStudio: "Private Practice Space",
       recoveryStudioDesc: "A comfortable, private space in Limassol dedicated to your movement sessions and bodywork.",
       quickActions: "Quick Actions",
@@ -495,7 +495,7 @@ export const translations: Record<Locale, Translation> = {
       loading: "Loading...",
       error: "An error occurred",
       success: "Success!",
-      tagline: "Posture & Movement Coaching"
+      tagline: "Body Restoration Expert"
     },
     footer: {
       quickLinks: "Quick Links"
@@ -522,7 +522,7 @@ export const translations: Record<Locale, Translation> = {
       averageRecovery: "Среднее время прогресса",
       averageRecoveryNumber: "3-6 недель",
       meetAnna: "Анна Закерничная",
-      aboutAnnaText1: "Более 8 лет я помогаю людям возвращаться к активной жизни. Работаю со сложными и застарелыми проблемами, возвращаю качество жизни и свободу движения. Мой метод основан на рефлекторных техниках, работе с местами компенсаций и паттернами движения.",
+      aboutAnnaText1: "Более 9 лет я помогаю людям возвращаться к активной жизни. Работаю со сложными и застарелыми проблемами, возвращаю качество жизни и свободу движения. Мой метод основан на рефлекторных техниках, работе с местами компенсаций и паттернами движения.",
       aboutAnnaText2: "Я работаю не с отдельными сигналами тела, а с причинами дискомфорта — через восстановление естественных паттернов движения, коррекцию осанки и развитие подвижности.",
       learnMoreAboutAnna: "Узнать больше",
       specializedPrograms: "Двигательные программы",
@@ -548,7 +548,7 @@ export const translations: Record<Locale, Translation> = {
       title: "Анна Закерничная",
       subtitle: "Помогаю вернуть свободу движений через функциональные тренировки, коррекцию осанки и развитие подвижности.",
       partnerInRecovery: "Ваш проводник на пути к свободе движений",
-      aboutText1: "Более 8 лет я помогаю людям справляться с напряжением и двигательными ограничениями. Мой подход сочетает научно доказанные методы с индивидуальным подходом — я работаю не с отдельными сигналами тела, а с причинами проблемы.",
+      aboutText1: "Более 9 лет я помогаю людям справляться с напряжением и двигательными ограничениями. Мой подход сочетает научно доказанные методы с индивидуальным подходом — я работаю не с отдельными сигналами тела, а с причинами проблемы.",
       aboutText2: "Я убеждена: каждый может двигаться свободно и чувствовать силу. Через восстановление естественных паттернов движения, коррекцию осанки и развитие подвижности я помогаю своим клиентам пройти путь от дискомфорта к активной жизни.",
       aboutText3: "Моя философия проста: работать с человеком в целом, а не с отдельными зонами. Изучая ваши индивидуальные особенности движения, образ жизни и цели, я создаю программы, которые дают долгосрочный результат.",
       startYourJourney: "Начать",
@@ -562,7 +562,7 @@ export const translations: Record<Locale, Translation> = {
       mobilityWorkDesc: "Возвращаем и улучшаем амплитуду движений через целенаправленные упражнения, устраняющие ограничения и дисбалансы.",
       qualifications: "Квалификация и опыт",
       qualificationsSubtitle: "Постоянно учусь и применяю самые современные научно обоснованные методы двигательной практики.",
-      experienceYears: "Более 8 лет опыта",
+      experienceYears: "Более 9 лет опыта",
       experienceYearsDesc: "Большой опыт работы с разными людьми и различными состояниями",
       continuingEducation: "Непрерывное обучение",
       continuingEducationDesc: "Регулярно изучаю новейшие техники и методологии",
@@ -725,7 +725,7 @@ export const translations: Record<Locale, Translation> = {
       phoneAndWhatsapp: "Телефон и WhatsApp",
       responseTime: "Время ответа",
       responseTimeValue: "В течение 24 часов",
-      emergencyConsultations: "Экстренные консультации доступны",
+      emergencyConsultations: "Гибкое расписание",
       recoveryStudio: "Пространство для занятий",
       recoveryStudioDesc: "Уютное приватное пространство в Лимассоле для индивидуальных занятий и работы с телом.",
       quickActions: "Быстрые действия",
@@ -736,7 +736,7 @@ export const translations: Record<Locale, Translation> = {
       loading: "Загрузка...",
       error: "Произошла ошибка",
       success: "Готово!",
-      tagline: "Работа с осанкой и движением"
+      tagline: "Эксперт по восстановлению тела"
     },
     footer: {
       quickLinks: "Быстрые ссылки"

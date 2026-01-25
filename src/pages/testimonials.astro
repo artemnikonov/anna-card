@@ -1,13 +1,12 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import TestimonialsPage from '@/components/pages/TestimonialsPage';
+import TestimonialsContent from '@/components/content/TestimonialsContent.astro';
 ---
 
 <MainLayout
-  title="Client Reviews - Massage & Posture Coaching in Limassol"
-  description="Read testimonials from clients who improved their posture and enhanced mobility through massage and movement coaching in Limassol, Cyprus."
-  keywords="massage reviews Limassol, client testimonials Cyprus, posture coaching results, massage feedback"
+  title="Client Reviews - Posture & Movement Coaching in Limassol"
+  description="Read testimonials from clients who improved their posture and enhanced mobility through movement coaching in Limassol, Cyprus."
+  keywords="posture coaching reviews Limassol, client testimonials Cyprus, movement coaching results, bodywork feedback"
 >
-  <TestimonialsPage client:idle />
+  <TestimonialsContent />
 </MainLayout>
-

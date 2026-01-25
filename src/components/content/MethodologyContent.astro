@@ -1,0 +1,303 @@
+---
+import { getLocaleFromUrl, getTranslations, getLocalizedPath } from '@/lib/i18n';
+import { AnimatedSection } from '@/components/ui/AnimatedSection';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import GlowButton from '@/components/ui/GlowButton';
+import { Search, Target, TrendingUp, CheckCircle, Clock, Users } from 'lucide-react';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = getTranslations(locale);
+
+const assessmentItems = [
+  t.methodology.assessmentItem1,
+  t.methodology.assessmentItem2,
+  t.methodology.assessmentItem3,
+  t.methodology.assessmentItem4,
+  t.methodology.assessmentItem5
+];
+
+const planningItems = [
+  t.methodology.planningItem1,
+  t.methodology.planningItem2,
+  t.methodology.planningItem3,
+  t.methodology.planningItem4,
+  t.methodology.planningItem5
+];
+
+const monitoringItems = [
+  t.methodology.monitoringItem1,
+  t.methodology.monitoringItem2,
+  t.methodology.monitoringItem3,
+  t.methodology.monitoringItem4,
+  t.methodology.monitoringItem5
+];
+
+const whyItWorksItems = [
+  { title: t.methodology.individualized, description: t.methodology.individualizedDesc },
+  { title: t.methodology.comprehensive, description: t.methodology.comprehensiveDesc },
+  { title: t.methodology.progressive, description: t.methodology.progressiveDesc }
+];
+---
+
+<div class="min-h-screen bg-white overflow-x-hidden">
+  <!-- Header -->
+  <section class="py-12 sm:py-16 md:py-24 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <div class="text-center">
+          <h1 class="text-4xl sm:text-5xl font-heading font-bold text-gray-800 mb-6">
+            {t.methodology.title}
+          </h1>
+          <p class="text-lg sm:text-xl font-paragraph text-blue-gray max-w-3xl mx-auto">
+            {t.methodology.subtitle}
+          </p>
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+
+  <!-- Method Overview -->
+  <section class="py-12 sm:py-16 md:py-24">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center mb-12 md:mb-20">
+        <AnimatedSection client:visible animation="fadeLeft">
+          <h2 class="text-4xl font-heading font-bold text-gray-800 mb-6">
+            {t.methodology.evidenceBased}
+          </h2>
+          <p class="text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
+            {t.methodology.evidenceBasedDesc}
+          </p>
+          <p class="text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
+            {t.methodology.evidenceBasedDesc2}
+          </p>
+          <p class="text-lg font-paragraph text-blue-gray mb-8 leading-relaxed">
+            {t.methodology.evidenceBasedDesc3}
+          </p>
+        </AnimatedSection>
+
+        <AnimatedSection client:visible animation="fadeRight">
+          <img
+            src="/images/methodology/overview.webp"
+            alt="Anna Z. demonstrating assessment techniques"
+            width="600"
+            class="w-full h-96 object-cover rounded-lg shadow-lg select-none"
+            loading="lazy"
+            decoding="async"
+          />
+        </AnimatedSection>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three Steps -->
+  <section class="py-12 sm:py-16 md:py-24 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <div class="text-center mb-12 sm:mb-16">
+          <h2 class="text-3xl sm:text-4xl font-heading font-bold text-gray-800 mb-6">
+            {t.methodology.ourApproach}
+          </h2>
+          <p class="text-base sm:text-lg font-paragraph text-blue-gray max-w-3xl mx-auto">
+            {t.methodology.ourApproachSubtitle}
+          </p>
+        </div>
+      </AnimatedSection>
+
+      <div class="space-y-12 sm:space-y-16 md:space-y-20">
+        <!-- Step 1: Assessment -->
+        <AnimatedSection client:visible animation="fadeUp">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <div>
+              <div class="flex items-center mb-6">
+                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mr-4">
+                  <span class="text-2xl font-heading font-bold text-white">01</span>
+                </div>
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Search className="w-8 h-8 text-primary" client:idle />
+                </div>
+              </div>
+              <h3 class="text-3xl font-heading font-bold text-gray-800 mb-6">
+                {t.methodology.assessment}
+              </h3>
+              <p class="text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
+                {t.methodology.assessmentDesc}
+              </p>
+              <div class="space-y-3">
+                {assessmentItems.map((item) => (
+                  <div class="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-primary" client:idle />
+                    <span class="font-paragraph text-gray-700">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <img
+                src="/images/methodology/assessment.webp"
+                alt="Comprehensive assessment process"
+                width="600"
+                class="w-full h-80 object-cover rounded-lg shadow-lg select-none"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </AnimatedSection>
+
+        <!-- Step 2: Movement Plan -->
+        <AnimatedSection client:visible animation="fadeUp">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+            <div class="order-2 lg:order-1">
+              <img
+                src="/images/methodology/planning.webp"
+                alt="Personalized movement plan development"
+                width="600"
+                class="w-full h-80 object-cover rounded-lg shadow-lg select-none"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="order-1 lg:order-2">
+              <div class="flex items-center mb-6">
+                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mr-4">
+                  <span class="text-2xl font-heading font-bold text-white">02</span>
+                </div>
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Target className="w-8 h-8 text-primary" client:idle />
+                </div>
+              </div>
+              <h3 class="text-3xl font-heading font-bold text-gray-800 mb-6">
+                {t.methodology.planning}
+              </h3>
+              <p class="text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
+                {t.methodology.planningDesc}
+              </p>
+              <div class="space-y-3">
+                {planningItems.map((item) => (
+                  <div class="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-primary" client:idle />
+                    <span class="font-paragraph text-gray-700">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+
+        <!-- Step 3: Progress Tracking -->
+        <AnimatedSection client:visible animation="fadeUp">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+            <div>
+              <div class="flex items-center mb-6">
+                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mr-4">
+                  <span class="text-2xl font-heading font-bold text-white">03</span>
+                </div>
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <TrendingUp className="w-8 h-8 text-primary" client:idle />
+                </div>
+              </div>
+              <h3 class="text-3xl font-heading font-bold text-gray-800 mb-6">
+                {t.methodology.monitoring}
+              </h3>
+              <p class="text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
+                {t.methodology.monitoringDesc}
+              </p>
+              <div class="space-y-3">
+                {monitoringItems.map((item) => (
+                  <div class="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-primary" client:idle />
+                    <span class="font-paragraph text-gray-700">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <img
+                src="/images/methodology/monitoring.webp"
+                alt="Progress tracking and monitoring"
+                width="600"
+                class="w-full h-80 object-cover rounded-lg shadow-lg select-none"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </AnimatedSection>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why This Works -->
+  <section class="py-12 sm:py-16 md:py-24">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl sm:text-4xl font-heading font-bold text-gray-800 mb-6 leading-tight">
+            {t.methodology.whyItWorks}
+          </h2>
+          <p class="text-base sm:text-lg font-paragraph text-blue-gray max-w-3xl mx-auto leading-relaxed">
+            {t.methodology.whyItWorksSubtitle}
+          </p>
+        </div>
+      </AnimatedSection>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {whyItWorksItems.map((item, index) => (
+          <AnimatedSection client:visible animation="fadeUp" delay={index * 0.1}>
+            <Card className="h-full text-center" client:idle>
+              <CardContent className="p-6 sm:p-8" client:idle>
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                  {index === 0 && <Users className="w-8 h-8 text-primary" client:idle />}
+                  {index === 1 && <Target className="w-8 h-8 text-primary" client:idle />}
+                  {index === 2 && <Clock className="w-8 h-8 text-primary" client:idle />}
+                </div>
+                <h3 class="text-2xl font-heading font-semibold text-gray-800 mb-4">
+                  {item.title}
+                </h3>
+                <p class="font-paragraph text-blue-gray leading-relaxed">
+                  {item.description}
+                </p>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-12 sm:py-16 md:py-24 bg-primary">
+    <div class="container mx-auto px-4 sm:px-6 text-center max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <h2 class="text-3xl sm:text-4xl font-heading font-bold text-white mb-6 leading-tight">
+          {t.methodology.startToday}
+        </h2>
+        <p class="text-lg sm:text-xl font-paragraph text-white mb-8 max-w-2xl mx-auto leading-relaxed">
+          {t.methodology.startTodaySubtitle}
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <GlowButton
+            href={getLocalizedPath('/contact', locale)}
+            size="lg"
+            variant="outline"
+            className="border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg font-medium"
+            client:idle
+          >
+            {t.homepage.bookSession}
+          </GlowButton>
+          <a href={getLocalizedPath('/services', locale)}>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg font-medium"
+              client:idle
+            >
+              {t.nav.services}
+            </Button>
+          </a>
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+</div>

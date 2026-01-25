@@ -1,0 +1,220 @@
+---
+import { getLocaleFromUrl, getTranslations, getLocalizedPath } from '@/lib/i18n';
+import type { Locale } from '@/lib/i18n';
+import { AnimatedSection } from '@/components/ui/AnimatedSection';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { ExpandableCard } from '@/components/ui/ExpandableCard';
+import NumberCounter from '@/components/ui/NumberCounter';
+import testimonialsData from '@/data/testimonials.json';
+import type { Testimonials } from '@/entities';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = getTranslations(locale);
+
+// Get testimonials for the current locale
+const data = testimonialsData as unknown as {
+  disclaimer: Record<Locale, string>;
+} & Record<Locale, Testimonials[]>;
+const testimonials = data[locale] || data.en;
+const disclaimer = data.disclaimer?.[locale] || data.disclaimer?.en || '';
+
+const programs = [
+  {
+    name: t.testimonials.specialization1Name,
+    description: t.testimonials.specialization1Desc,
+    clientCount: t.testimonials.specialization1Count,
+  },
+  {
+    name: t.testimonials.specialization2Name,
+    description: t.testimonials.specialization2Desc,
+    clientCount: t.testimonials.specialization2Count,
+  },
+  {
+    name: t.testimonials.specialization3Name,
+    description: t.testimonials.specialization3Desc,
+    clientCount: t.testimonials.specialization3Count,
+  },
+  {
+    name: t.testimonials.specialization4Name,
+    description: t.testimonials.specialization4Desc,
+    clientCount: t.testimonials.specialization4Count,
+  },
+];
+
+// Generate JSON-LD for SEO
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: testimonials.map((testimonial, index) => ({
+    '@type': 'Review',
+    position: index + 1,
+    author: testimonial.clientName,
+    reviewBody: testimonial.testimonialText,
+    datePublished: testimonial.dateSubmitted,
+  })),
+};
+---
+
+<!-- JSON-LD for SEO -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+<div class="min-h-screen bg-white overflow-x-hidden">
+  <!-- Header -->
+  <section class="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <div class="text-center">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-gray-800 mb-4 sm:mb-6 leading-tight">
+            {t.testimonials.title}
+          </h1>
+          <p class="text-base sm:text-lg md:text-xl font-paragraph text-blue-gray max-w-3xl mx-auto px-4 leading-relaxed">
+            {t.testimonials.subtitle}
+          </p>
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="py-12 sm:py-16 bg-primary">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
+        <AnimatedSection client:visible animation="fadeUp" delay={0}>
+          <div class="cursor-default py-4">
+            <div class="text-2xl sm:text-3xl font-heading font-bold text-white mb-2">
+              <NumberCounter end={1000} suffix="+" duration={1.3} client:load>1000+</NumberCounter>
+            </div>
+            <div class="font-paragraph text-sm sm:text-base text-white">
+              {t.testimonials.happyClients}
+            </div>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection client:visible animation="fadeUp" delay={0.1}>
+          <div class="cursor-default py-4">
+            <div class="text-2xl sm:text-3xl font-heading font-bold text-white mb-2">
+              <NumberCounter end={9} suffix="+" duration={1.3} client:load>9+</NumberCounter>
+            </div>
+            <div class="font-paragraph text-sm sm:text-base text-white">
+              {t.testimonials.yearsExperience}
+            </div>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection client:visible animation="fadeUp" delay={0.2}>
+          <div class="cursor-default py-4">
+            <div class="text-2xl sm:text-3xl font-heading font-bold text-white mb-2">
+              {t.testimonials.averageRecoveryNumber}
+            </div>
+            <div class="font-paragraph text-sm sm:text-base text-white">
+              {t.testimonials.averageRecovery}
+            </div>
+          </div>
+        </AnimatedSection>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white border-t border-gray-100">
+    <div class="container mx-auto px-4 sm:px-6 max-w-3xl">
+      <!-- Disclaimer -->
+      {disclaimer && (
+        <div class="mb-8 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+          <p class="text-sm text-gray-600 text-center italic">
+            {disclaimer}
+          </p>
+        </div>
+      )}
+
+      <div class="space-y-8 sm:space-y-10">
+        {testimonials.map((testimonial) => (
+          <AnimatedSection client:visible animation="fadeUp">
+            <ExpandableCard
+              id={testimonial._id}
+              clientName={testimonial.clientName || ''}
+              testimonialText={testimonial.testimonialText || ''}
+              readMoreText={t.testimonials.readMore}
+              showLessText={t.testimonials.showLess}
+              client:visible
+            />
+          </AnimatedSection>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Programs -->
+  <section class="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white border-t border-gray-100">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <div class="text-center mb-12 sm:mb-16">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-gray-800 mb-4 sm:mb-6 px-4 leading-tight">
+            {t.testimonials.programsTitle}
+          </h2>
+          <p class="text-base sm:text-lg font-paragraph text-blue-gray max-w-3xl mx-auto px-4 leading-relaxed">
+            {t.testimonials.programsSubtitle}
+          </p>
+        </div>
+      </AnimatedSection>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+        {programs.map((program, index) => (
+          <AnimatedSection client:visible animation="fadeUp" delay={index * 0.1}>
+            <Card className="h-full text-center hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-primary/30 bg-white" client:idle>
+              <CardContent className="p-4 sm:p-6" client:idle>
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-gray-800 mb-2 sm:mb-3 leading-tight">
+                  {program.name}
+                </h3>
+                <p class="font-paragraph text-sm sm:text-base text-blue-gray mb-3 sm:mb-4 leading-relaxed">
+                  {program.description}
+                </p>
+                <Badge variant="outline" className="text-xs sm:text-sm text-primary border-primary" client:idle>
+                  {program.clientCount}
+                </Badge>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 sm:py-20 md:py-24 bg-primary">
+    <div class="container mx-auto px-4 sm:px-6 text-center max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white mb-4 sm:mb-6 px-4">
+          {t.testimonials.readyToJoin}
+        </h2>
+        <p class="text-base sm:text-lg md:text-xl font-paragraph text-white mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+          {t.testimonials.readyToJoinSubtitle}
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
+          <a href={getLocalizedPath('/contact', locale)} class="w-full sm:w-auto">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-primary px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium w-full sm:w-auto"
+              client:idle
+            >
+              {t.testimonials.startYourStory}
+            </Button>
+          </a>
+          <a href={getLocalizedPath('/services', locale)} class="w-full sm:w-auto">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-primary px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium w-full sm:w-auto"
+              client:idle
+            >
+              {t.nav.services}
+            </Button>
+          </a>
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+</div>

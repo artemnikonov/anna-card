@@ -1,13 +1,12 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import AboutPage from '@/components/pages/AboutPage';
+import AboutContent from '@/components/content/AboutContent.astro';
 ---
 
 <MainLayout
-  title="About Anna Zakernichnaia - Massage & Movement Coach in Limassol"
-  description="Meet Anna Zakernichnaia, massage and movement coach based in Limassol, Cyprus. Specialized in posture correction and sports massage."
-  keywords="Anna Zakernichnaia, massage Limassol, movement coach Cyprus, posture specialist"
+  title="About Anna Zakernichnaia - Posture & Movement Coach in Limassol"
+  description="Meet Anna Zakernichnaia, posture and movement coach based in Limassol, Cyprus. Specialized in posture correction and body alignment."
+  keywords="Anna Zakernichnaia, posture coach Limassol, movement coach Cyprus, posture specialist"
 >
-  <AboutPage client:idle />
+  <AboutContent />
 </MainLayout>
-

@@ -1,13 +1,12 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import ServicesPage from '@/components/pages/ServicesPage';
+import ServicesContent from '@/components/content/ServicesContent.astro';
 ---
 
 <MainLayout
-  title="Массаж и wellness услуги в Лимассоле | Анна Закерничная"
-  description="Спортивный массаж, работа с телом, коррекция осанки в Лимассоле, Кипр. Индивидуальные программы для улучшения подвижности."
-  keywords="услуги массажа Лимассол, спортивный массаж Кипр, работа с телом, коррекция осанки, wellness услуги Лимассол"
+  title="Работа с телом и wellness услуги в Лимассоле | Анна Закерничная"
+  description="Работа с телом, коррекция осанки в Лимассоле, Кипр. Индивидуальные программы для улучшения подвижности."
+  keywords="работа с телом Лимассол, коррекция осанки Кипр, wellness услуги Лимассол, улучшение подвижности"
 >
-  <ServicesPage client:idle />
+  <ServicesContent />
 </MainLayout>
-

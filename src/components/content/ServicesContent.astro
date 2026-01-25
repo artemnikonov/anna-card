@@ -1,0 +1,151 @@
+---
+import { getLocaleFromUrl, getTranslations, getLocalizedPath } from '@/lib/i18n';
+import type { Locale } from '@/lib/i18n';
+import { AnimatedSection } from '@/components/ui/AnimatedSection';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle } from 'lucide-react';
+import programsData from '@/data/programs.json';
+import type { Programs } from '@/entities';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = getTranslations(locale);
+
+// Get programs for the current locale
+const data = programsData as unknown as Record<Locale, Programs[]>;
+const programs = data[locale] || data.en;
+---
+
+<div class="min-h-screen bg-white overflow-x-hidden">
+  <!-- Header -->
+  <section class="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <div class="text-center">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-gray-800 mb-4 sm:mb-6 leading-tight">
+            {t.services.title}
+          </h1>
+          <p class="text-base sm:text-lg md:text-xl font-paragraph text-blue-gray max-w-3xl mx-auto px-4 leading-relaxed">
+            {t.services.subtitle}
+          </p>
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+
+  <!-- Programs Grid -->
+  <section class="py-12 sm:py-16 md:py-24 bg-white border-t border-gray-100">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
+        {programs.map((program, index) => (
+          <AnimatedSection client:visible animation="fadeUp" delay={index * 0.1}>
+            <Card className="h-full hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-primary/30" client:idle>
+              <div class="relative">
+                <img
+                  src={program.programImage}
+                  alt={program.programName || 'Program'}
+                  width="600"
+                  class="w-full h-80 sm:h-96 object-cover rounded-t-lg select-none"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <CardHeader client:idle>
+                <CardTitle className="text-2xl font-heading font-bold text-gray-800" client:idle>
+                  {program.programName}
+                </CardTitle>
+                <p class="font-paragraph text-blue-gray">
+                  {program.shortDescription}
+                </p>
+              </CardHeader>
+
+              <CardContent className="space-y-6" client:idle>
+                <p class="font-paragraph text-gray-700 leading-relaxed">
+                  {program.fullDescription}
+                </p>
+
+                {program.keyBenefits && (
+                  <div>
+                    <h4 class="font-heading font-semibold text-gray-800 mb-3">{t.services.keyBenefits}</h4>
+                    <div class="flex flex-wrap gap-2">
+                      {program.keyBenefits.split(',').map((benefit) => (
+                        <div class="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-primary" client:idle />
+                          <span class="font-paragraph text-sm text-gray-700">
+                            {benefit.trim()}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Personalized Approach CTA -->
+  <section class="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white border-t border-gray-100">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <div class="text-center max-w-4xl mx-auto">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-gray-800 mb-6 leading-tight">
+            {t.services.personalizedApproach}
+          </h2>
+          <p class="text-base sm:text-lg font-paragraph text-blue-gray mb-8 leading-relaxed">
+            {t.services.personalizedApproachDesc}
+          </p>
+          <a href={getLocalizedPath('/methodology', locale)} aria-label={t.services.ariaLearnMoreMethodology}>
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-white font-heading"
+              client:idle
+            >
+              {t.services.learnMoreMethodology}
+            </Button>
+          </a>
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-12 sm:py-16 md:py-24 bg-primary">
+    <div class="container mx-auto px-4 sm:px-6 text-center max-w-7xl">
+      <AnimatedSection client:visible animation="fadeUp">
+        <h2 class="text-3xl sm:text-4xl font-heading font-bold text-white mb-6 leading-tight">
+          {t.services.getStarted}
+        </h2>
+        <p class="text-lg sm:text-xl font-paragraph text-white mb-8 max-w-2xl mx-auto leading-relaxed">
+          {t.services.getStartedSubtitle}
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href={getLocalizedPath('/contact', locale)} class="w-full sm:w-auto" aria-label={t.services.ariaScheduleConsultation}>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-base sm:text-lg font-medium w-full"
+              client:idle
+            >
+              {t.services.scheduleConsultation}
+            </Button>
+          </a>
+          <a href={getLocalizedPath('/methodology', locale)} class="w-full sm:w-auto" aria-label={t.services.ariaViewMethodology}>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-base sm:text-lg font-medium w-full"
+              client:idle
+            >
+              {t.nav.methodology}
+            </Button>
+          </a>
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+</div>
