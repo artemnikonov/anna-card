@@ -49,10 +49,11 @@ export interface Translation {
   about: {
     title: string;
     subtitle: string;
-    partnerInRecovery: string;
+    myPath: string;
     aboutText1: string;
     aboutText2: string;
     aboutText3: string;
+    aboutText4: string;
     startYourJourney: string;
     myPhilosophy: string;
     philosophySubtitle: string;
@@ -306,10 +307,11 @@ export const translations: Record<Locale, Translation> = {
     about: {
       title: "Meet Anna Zakernichnaia",
       subtitle: "Dedicated to helping you achieve functional restoration through movement, posture re-education, and mobility work.",
-      partnerInRecovery: "Your Guide to Better Movement",
-      aboutText1: "With over 9 years of experience in movement coaching and restoration, I've dedicated my career to helping individuals address persistent tension and movement limitations. My approach combines evidence-based techniques with personalized care to address the root causes of imbalances.",
-      aboutText2: "I believe that every person has the potential to move better, feel stronger, and live with ease. Through functional movement patterns, posture correction, and targeted mobility work, I guide my clients on a journey from discomfort to performance.",
-      aboutText3: "My philosophy is simple: work with the whole person, not just isolated areas. By understanding your unique movement patterns, lifestyle, and goals, I create personalized programs that deliver lasting results.",
+      myPath: "My Path",
+      aboutText1: "My path to bodywork started through dance — contemporary, modern, classical. I trained in partnering, floor techniques, yoga, pilates, and qigong.",
+      aboutText2: "But overtraining led to a knee injury. I found myself on the other side — as a client with a recovery specialist. It changed everything.",
+      aboutText3: "I got certified in massage and anatomy, completed years of reflexology training, and mastered lymphatic drainage and corrective techniques.",
+      aboutText4: "For 9+ years I've been working with people — from injury recovery to posture correction for office workers. My mission is to restore the body to its default settings.",
       startYourJourney: "Start Your Journey",
       myPhilosophy: "My Philosophy",
       philosophySubtitle: "Functional restoration through movement, body awareness, and mobility development",
@@ -547,10 +549,11 @@ export const translations: Record<Locale, Translation> = {
     about: {
       title: "Анна Закерничная",
       subtitle: "Помогаю вернуть свободу движений через функциональные тренировки, коррекцию осанки и развитие подвижности.",
-      partnerInRecovery: "Ваш проводник на пути к свободе движений",
-      aboutText1: "Более 9 лет я помогаю людям справляться с напряжением и двигательными ограничениями. Мой подход сочетает научно доказанные методы с индивидуальным подходом — я работаю не с отдельными сигналами тела, а с причинами проблемы.",
-      aboutText2: "Я убеждена: каждый может двигаться свободно и чувствовать силу. Через восстановление естественных паттернов движения, коррекцию осанки и развитие подвижности я помогаю своим клиентам пройти путь от дискомфорта к активной жизни.",
-      aboutText3: "Моя философия проста: работать с человеком в целом, а не с отдельными зонами. Изучая ваши индивидуальные особенности движения, образ жизни и цели, я создаю программы, которые дают долгосрочный результат.",
+      myPath: "Мой путь",
+      aboutText1: "Путь к работе с телом начался через танцы — контемп, модерн, классика. Я осваивала партнеринг, партерные техники, йогу, пилатес, цигун.",
+      aboutText2: "Но перегрузки привели к травме колена. Я оказалась по другую сторону — как клиент у специалиста по восстановлению. Это изменило всё.",
+      aboutText3: "Получила образование в области массажа и анатомии, прошла многолетнее обучение рефлексотерапии, освоила лимфодренажные и корректирующие техники.",
+      aboutText4: "9+ лет работаю с людьми — от восстановления после травм до коррекции осанки офисных работников. Моя задача — вернуть тело к базовым настройкам.",
       startYourJourney: "Начать",
       myPhilosophy: "Мой подход",
       philosophySubtitle: "Функциональное восстановление через движение, возвращение чувствительности своего тела и развитие подвижности и мобильности",

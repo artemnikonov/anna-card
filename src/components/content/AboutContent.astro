@@ -44,7 +44,7 @@ const t = getTranslations(locale);
         <AnimatedSection client:visible animation="fadeRight">
           <div class="text-center lg:text-left">
             <h2 class="text-3xl sm:text-4xl font-heading font-bold text-gray-800 mb-6 leading-tight">
-              {t.about.partnerInRecovery}
+              {t.about.myPath}
             </h2>
             <p class="text-base sm:text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
               {t.about.aboutText1}
@@ -52,8 +52,11 @@ const t = getTranslations(locale);
             <p class="text-base sm:text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
               {t.about.aboutText2}
             </p>
-            <p class="text-base sm:text-lg font-paragraph text-blue-gray mb-8 leading-relaxed">
+            <p class="text-base sm:text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
               {t.about.aboutText3}
+            </p>
+            <p class="text-base sm:text-lg font-paragraph text-blue-gray mb-8 leading-relaxed">
+              {t.about.aboutText4}
             </p>
             <a href={getLocalizedPath('/contact', locale)} aria-label="Start your journey">
               <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3" client:idle>
