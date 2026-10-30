@@ -51,14 +51,17 @@ EOF
         echo "Created .env with secure passwords"
     fi
 
-    echo "Stopping old containers..."
-    docker compose down 2>/dev/null || true
+    # Build while the old container keeps serving, then swap: downtime is ~1s, not the whole build
+    echo "Building new image..."
+    docker compose build
 
-    echo "Building and starting containers..."
-    docker compose up -d --build
+    echo "Swapping container..."
+    docker compose up -d
 
-    echo "Waiting for services to start..."
-    sleep 10
+    echo "Removing old images of this project..."
+    docker image prune -f --filter label=com.docker.compose.project=anna-card
+
+    sleep 3
 
     echo "Container status:"
     docker compose ps
@@ -69,7 +72,7 @@ ENDSSH
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✅ Deployment successful!${NC}"
     echo -e "${GREEN}🌐 Site: https://annabody.studio${NC}"
-    echo -e "${GREEN}📊 Analytics: http://91.98.68.252:3001${NC}"
+    echo -e "${GREEN}📊 Analytics: https://stats.annabody.studio${NC}"
 else
     echo -e "${RED}❌ Deployment failed!${NC}"
     exit 1
