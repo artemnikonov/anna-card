@@ -1,0 +1,147 @@
+---
+// Site header. Mobile menu is a native <dialog>: focus trap, Escape, backdrop
+// and focus return come from the browser.
+import { Globe, Menu, X } from '@lucide/astro';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { bookingLink } from '@/lib/contacts';
+import { getAlternatePath, getLocalizedPath, getTranslations, type Locale } from '@/lib/i18n';
+import { baseNavigation } from '@/lib/navigation';
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+const { locale, path } = Astro.props;
+const t = getTranslations(locale);
+const ru = locale === 'ru';
+const other: Locale = ru ? 'en' : 'ru';
+
+const strip = (p: string) => p.replace(/^\/ru/, '') || '/';
+const navigation = baseNavigation.map((item) => {
+  const href = getLocalizedPath(item.path, locale);
+  const base = strip(href);
+  const active = base === '/' ? strip(path) === '/' : strip(path).startsWith(base);
+  return { name: t.nav[item.key], href, active };
+});
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 data-scrolled:bg-white/95 data-scrolled:backdrop-blur-md data-scrolled:shadow-xs"
+>
+  <div class="container mx-auto px-4 sm:px-6 max-w-[100rem]">
+    <div class="flex items-center justify-between h-20">
+      <a href={getLocalizedPath('/', locale)} class="flex items-center space-x-2 sm:space-x-3 min-w-0">
+        <div class="w-8 sm:w-10 h-8 sm:h-10 bg-primary rounded-full flex items-center justify-center shrink-0">
+          <span class="text-white font-heading font-bold text-sm sm:text-lg">AZ</span>
+        </div>
+        <div class="min-w-0">
+          <div class="font-heading font-bold text-gray-800 text-sm sm:text-lg whitespace-nowrap">{t.common.name}</div>
+          <div class="font-paragraph text-[10px] sm:text-xs text-blue-gray -mt-1 whitespace-nowrap">{t.common.tagline}</div>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center space-x-8">
+        {navigation.map((item) => (
+          <a
+            href={item.href}
+            aria-current={item.active ? 'page' : undefined}
+            class:list={['font-paragraph transition-colors duration-200 relative group', item.active ? 'text-primary font-medium' : 'text-gray-700 hover:text-primary']}
+          >
+            {item.name}
+            <span class:list={['absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300', item.active ? 'w-full' : 'w-0 group-hover:w-full']}></span>
+          </a>
+        ))}
+      </nav>
+
+      <div class="flex items-center space-x-2 lg:space-x-4">
+        <a
+          href={getAlternatePath(path, other)}
+          hreflang={other}
+          lang={other}
+          aria-label={other === 'ru' ? 'Русская версия' : 'English version'}
+          class="inline-flex items-center gap-2 h-8 px-3 rounded-md text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-secondary/10 transition-colors duration-200"
+        >
+          <Globe class="w-4 h-4" aria-hidden="true" />
+          {other.toUpperCase()}
+        </a>
+        <a
+          {...bookingLink(locale)}
+          class={cn(buttonVariants({ size: 'sm' }), 'hidden lg:inline-flex')}
+        >
+          {t.homepage.bookSession}
+        </a>
+        <button
+          type="button"
+          id="menu-open"
+          class="lg:hidden p-2 text-gray-700 hover:text-primary transition-colors"
+          aria-label={ru ? 'Открыть меню' : 'Open menu'}
+          aria-haspopup="dialog"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <Menu class="w-6 h-6" />
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<dialog
+  id="mobile-menu"
+  aria-label={ru ? 'Меню' : 'Menu'}
+  class="lg:hidden fixed inset-y-0 right-0 left-auto m-0 h-dvh max-h-dvh w-[280px] sm:w-80 max-w-none p-0 bg-white shadow-xl backdrop:bg-black/50 open:animate-[slide-in-right_0.3s_ease-out]"
+>
+  <div class="flex flex-col h-full p-6 overflow-y-auto">
+    <div class="flex items-center justify-end mb-6">
+      <button type="button" data-close autofocus class="p-2 text-gray-700 hover:text-primary transition-colors" aria-label={ru ? 'Закрыть меню' : 'Close menu'}>
+        <X class="w-6 h-6" />
+      </button>
+    </div>
+    <nav class="flex flex-col space-y-2 py-6 flex-1">
+      {navigation.map((item) => (
+        <a
+          href={item.href}
+          aria-current={item.active ? 'page' : undefined}
+          class:list={['font-paragraph text-lg transition-all duration-200 px-4 py-3 rounded-lg', item.active ? 'bg-primary/10 text-primary font-medium' : 'text-gray-700 hover:bg-gray-100 hover:text-primary']}
+        >
+          {item.name}
+        </a>
+      ))}
+    </nav>
+    <div class="border-t pt-6">
+      <a {...bookingLink(locale)} data-close class={cn(buttonVariants(), 'w-full')}>
+        {t.homepage.bookSession}
+      </a>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  // Header is re-rendered on every page swap (ClientRouter), so look it up each time
+  const onScroll = () => document.getElementById('site-header')?.toggleAttribute('data-scrolled', window.scrollY > 50);
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  document.addEventListener('astro:page-load', () => {
+    onScroll();
+    const dialog = document.getElementById('mobile-menu') as HTMLDialogElement;
+    const opener = document.getElementById('menu-open')!;
+    opener.addEventListener('click', () => {
+      dialog.showModal();
+      opener.setAttribute('aria-expanded', 'true');
+    });
+    dialog.addEventListener('close', () => {
+      opener.setAttribute('aria-expanded', 'false');
+      opener.focus(); // Safari doesn't focus buttons on click, so restore it explicitly
+    });
+    dialog.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', () => dialog.close()));
+    // Click on the backdrop (outside the panel) closes the menu
+    dialog.addEventListener('click', (e) => e.target === dialog && dialog.close());
+  });
+  // The menu is hidden on desktop (lg:hidden); close it so an invisible modal can't freeze the page
+  matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+    const dialog = document.getElementById('mobile-menu') as HTMLDialogElement | null;
+    if (e.matches && dialog?.open) dialog.close();
+  });
+</script>

@@ -1,0 +1,13 @@
+---
+// Scroll reveal without JS framework: CSS in global.css, observer in MainLayout.
+// Without JS (or with reduced motion) content is simply visible.
+interface Props {
+  animation?: 'fadeUp' | 'fadeIn' | 'fadeLeft' | 'fadeRight' | 'scale';
+  delay?: number;
+  class?: string;
+}
+const { animation = 'fadeUp', delay = 0, class: className = '' } = Astro.props;
+---
+<div class:list={['reveal', `reveal-${animation}`, className]} style={delay ? `--reveal-delay:${delay}s` : undefined}>
+  <slot />
+</div>

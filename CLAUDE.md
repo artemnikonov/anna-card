@@ -16,38 +16,39 @@ npm run preview  # Preview production build locally
 
 ## Tech Stack
 
-- **Astro 5** - Static site generator with file-based routing
-- **React 18** - Interactive components loaded with `client:idle`
+- **Astro 7** (Node 22.23+) - Static site generator with file-based routing
+- **No UI framework** - plain `.astro` components; the few interactive bits (mobile menu `<dialog>`, testimonial "Read more", scroll reveal) are small scripts re-run on `astro:page-load`; page changes go through Astro `ClientRouter` (instant swap, no cross-fade)
+- **Icons** - `@lucide/astro`
 - **TypeScript** - Strict mode enabled
-- **Tailwind CSS 3** - Styling with custom color palette
-- **Zustand** - Language state management with localStorage persistence
-- **Framer Motion** - Animations
+- **Tailwind CSS 4** - via `@tailwindcss/vite`; theme (colors, fonts, sizes) lives in `@theme` in `src/styles/global.css`
+- **Animations** - `AnimatedSection.astro` + CSS in `global.css` (no animation library)
 
 ## Architecture
 
 ### Routing Pattern
-Astro pages in `/src/pages/` render React page components. Each page exists twice:
+Astro pages in `/src/pages/` render content components. Each page exists twice:
 - English: `/src/pages/{page}.astro` → `/{page}`
 - Russian: `/src/pages/ru/{page}.astro` → `/ru/{page}`
 
-The Astro files are thin wrappers that render corresponding React components from `/src/components/pages/`.
+The page files are thin wrappers (SEO title/description) around `/src/components/content/*Content.astro`.
 
 ### i18n Implementation
 Custom implementation without external library:
 - `src/lib/translations.ts` - All bilingual content as TypeScript objects
 - `src/lib/i18n.ts` - Utilities: `getTranslations()`, `getLocaleFromUrl()`
-- `src/hooks/useTranslation.ts` - React hook returning `{ language, t, setLanguage }`
-- Language detected from URL path on page load via Astro's `astro:page-load` event
+- Locale comes from the URL (`getLocaleFromUrl(Astro.url)`); Header/Footer get it as a `locale` prop
+- `src/lib/contacts.ts` - All contact details (phone, email, messengers)
 
 ### Component Organization
-- `/src/components/pages/` - Full page React components (HomePage, AboutPage, etc.)
+- `/src/components/content/` - Page content (HomeContent, AboutContent, etc.)
+- `/src/components/` - Shared sections: `PageHero.astro`, `CtaSection.astro`
 - `/src/components/layout/` - Header, Footer
-- `/src/components/ui/` - Shadcn/UI-style components using CVA for variants
+- `/src/components/ui/` - `AnimatedSection.astro`, `ExpandableCard.astro`, `buttonVariants` (CVA) for button-styled links
 - `/src/layouts/MainLayout.astro` - Wraps all pages with Head, Header, Footer
 
 ### Styling
 - Use `cn()` from `@/lib/utils` for conditional class merging
-- Custom colors defined in `tailwind.config.mjs`: primary (#5F9EA0), secondary (#808000)
+- Custom colors defined in `@theme` in `src/styles/global.css`: primary (#437B7D), secondary (#808000)
 - Font: Montserrat (400, 700 weights)
 
 ### Data
@@ -69,7 +70,7 @@ Deploy: `./deploy.sh` - builds locally, uploads, restarts container
 
 Docker setup:
 - `docker-compose.yml` - Nginx container with Traefik labels
-- `Dockerfile` - Multi-stage: Node 20 build → Nginx Alpine
+- `Dockerfile` - Multi-stage: Node 22 build → Nginx Alpine
 - SSL handled by Traefik automatically
 
 ## Import Alias
@@ -83,4 +84,4 @@ import { Button } from "@/components/ui/button"
 ## Important Rules
 
 1. **No auto-deploy/commit** - Never run `./deploy.sh` or `git commit` unless explicitly asked
-2. **No medical terminology** - Avoid words like: therapy, therapeutic, treatment, лечение, терапия, терапевтический. Use: coaching, training, massage, работа с телом, массаж
+2. **No medical terminology** - Avoid words like: therapy, therapeutic, treatment, лечение, терапия, терапевтический. Use: coaching, training, massage, работа с телом, массаж. Exception: the testimonials disclaimer (`src/data/testimonials.json`) must say outright that the services are not medical and do not diagnose or treat; keep that wording

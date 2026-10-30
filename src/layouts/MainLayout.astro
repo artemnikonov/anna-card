@@ -1,10 +1,10 @@
 ---
 import '@/styles/global.css';
-import '@/styles/fonts.css';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import { getAlternatePath, getLocaleFromUrl } from '@/lib/i18n';
+import { CONTACTS } from '@/lib/contacts';
 import { ClientRouter } from 'astro:transitions';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import { getLocaleFromUrl } from '@/lib/i18n';
 
 interface Props {
   title?: string;
@@ -12,13 +12,14 @@ interface Props {
   keywords?: string;
   image?: string;
   canonical?: string;
+  noindex?: boolean;
 }
 
 const locale = getLocaleFromUrl(Astro.url);
 
 const defaultKeywords = locale === 'ru'
-  ? 'коррекция осанки Лимассол, работа с телом Кипр, улучшение подвижности, wellness Кипр, Лимассол'
-  : 'posture correction Limassol, movement coaching Cyprus, bodywork, wellness Cyprus, Limassol';
+  ? 'массаж Лимассол, коррекция осанки Лимассол, работа с телом Кипр, улучшение подвижности, wellness Кипр, Лимассол'
+  : 'massage Limassol, posture correction Limassol, movement coaching Cyprus, bodywork, wellness Cyprus, Limassol';
 
 const {
   title = locale === 'ru'
@@ -29,7 +30,8 @@ const {
     : 'Professional posture and movement coaching in Limassol, Cyprus. Private sessions for posture improvement and mobility.',
   keywords = defaultKeywords,
   image = '/images/og-image.webp',
-  canonical = Astro.url.pathname
+  canonical = Astro.url.pathname,
+  noindex = false
 } = Astro.props;
 
 const canonicalURL = new URL(canonical, Astro.site);
@@ -37,10 +39,8 @@ const imageURL = new URL(image, Astro.site);
 
 // Hreflang URLs for multilingual SEO
 const currentPath = Astro.url.pathname;
-const isRussian = currentPath.startsWith('/ru');
-const basePath = isRussian ? currentPath.replace(/^\/ru/, '') || '/' : currentPath;
-const enURL = new URL(basePath, Astro.site);
-const ruURL = new URL(`/ru${basePath === '/' ? '' : basePath}`, Astro.site);
+const enURL = new URL(getAlternatePath(currentPath, 'en'), Astro.site);
+const ruURL = new URL(getAlternatePath(currentPath, 'ru'), Astro.site);
 
 // JSON-LD Structured Data
 const baseJsonLd = {
@@ -48,12 +48,12 @@ const baseJsonLd = {
   "@type": "LocalBusiness",
   "name": "Anna Zakernichnaia - Posture & Movement Coach",
   "description": locale === 'ru'
-    ? "Профессиональная коррекция осанки и работа с телом в Лимассоле, Кипр"
-    : "Professional posture and movement coaching in Limassol, Cyprus",
+    ? "Массаж, коррекция осанки и индивидуальные тренировки в Лимассоле, Кипр"
+    : "Massage, posture correction and personal movement training in Limassol, Cyprus",
   "url": "https://annabody.studio",
   "image": "https://annabody.studio/images/og-image.webp",
-  "telephone": "+79267291313",
-  "email": "ann.massage@icloud.com",
+  "telephone": CONTACTS.phone,
+  "email": CONTACTS.email,
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Limassol",
@@ -72,8 +72,8 @@ const baseJsonLd = {
     "closes": "20:00"
   },
   "sameAs": [
-    "https://t.me/AnnaZakernichnaia",
-    "https://www.instagram.com/annabody.studio"
+    CONTACTS.telegram,
+    CONTACTS.instagram
   ]
 };
 ---
@@ -81,54 +81,53 @@ const baseJsonLd = {
 <!doctype html>
 <html lang={locale}>
   <head>
+    <ClientRouter fallback="swap" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#5F9EA0" />
+    <meta name="theme-color" content="#437B7D" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
-    <link rel="canonical" href={canonicalURL} />
-
-    <!-- Hreflang for multilingual SEO -->
-    <link rel="alternate" hreflang="en" href={enURL} />
-    <link rel="alternate" hreflang="ru" href={ruURL} />
-    <link rel="alternate" hreflang="x-default" href={enURL} />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {noindex ? <meta name="robots" content="noindex" /> : <>
+      <link rel="canonical" href={canonicalURL} />
+      <link rel="alternate" hreflang="en" href={enURL} />
+      <link rel="alternate" hreflang="ru" href={ruURL} />
+      <link rel="alternate" hreflang="x-default" href={enURL} />
+    </>}
 
     <!-- JSON-LD Structured Data -->
     <script is:inline type="application/ld+json" set:html={JSON.stringify(baseJsonLd)} />
 
-    <!-- DNS prefetch for external resources -->
-    <link rel="dns-prefetch" href="//static.parastorage.com" />
-    <link rel="preconnect" href="//static.parastorage.com" crossorigin />
-
     <!-- Preload Montserrat font to prevent FOUT -->
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="//static.parastorage.com/tag-bundler/api/v1/fonts-cache/googlefont/woff2/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="//static.parastorage.com/tag-bundler/api/v1/fonts-cache/googlefont/woff2/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459W1hyyTh89ZNpQ.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/JTUSjIg1_i6t8kCHKm459W1hyyTh89ZNpQ.woff2" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Anna Body Studio" />
+    <meta property="og:locale" content={locale === 'ru' ? 'ru_RU' : 'en_US'} />
+    <meta property="og:locale:alternate" content={locale === 'ru' ? 'en_US' : 'ru_RU'} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={imageURL} />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={imageURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
 
     <!-- Additional SEO -->
     <meta name="author" content="Anna Zakernichnaia" />
     <meta name="keywords" content={keywords} />
 
     <slot name="head" />
-    <ClientRouter />
 
     <!-- Umami Analytics -->
     <script
@@ -138,71 +137,55 @@ const baseJsonLd = {
       data-website-id="bbf062e9-7570-4278-ba92-ca68c381f42d"
     ></script>
 
-    <script is:inline>
-      if (!window.__astroScrollToTopInitialized) {
-        window.__astroScrollToTopInitialized = true;
-        document.addEventListener('astro:after-swap', () => {
-          window.scrollTo({ left: 0, top: 0, behavior: 'instant' });
-        });
-      }
-    </script>
-
-    <style is:inline>
-      html {
-        background-color: #FFFFFF;
-      }
-
-      body {
-        background-color: #FFFFFF;
-        display: block !important;
-      }
-
-      /* Disable view transition animations to prevent flickering */
-      ::view-transition-old(root),
-      ::view-transition-new(root) {
-        animation: none !important;
-      }
-
-      /* Prevent any flash during navigation */
-      ::view-transition-group(root) {
-        animation-duration: 0s !important;
-      }
-
-      header {
-        position: fixed;
-        z-index: 50;
-      }
-
-      .page-shell {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .page-shell main {
-        flex: 1;
-      }
-
-    </style>
-
-
-
   </head>
   <body>
-    <div class="page-shell min-h-screen bg-white flex flex-col">
-      <div transition:persist="header">
-        <Header client:idle />
-      </div>
+    <div class="min-h-screen bg-white flex flex-col">
+      <Header locale={locale} path={currentPath} />
 
       <main class="pt-20 flex-1 min-h-[60vh]">
         <slot />
       </main>
 
-      <div transition:persist="footer">
-        <Footer client:idle />
-      </div>
+      <Footer locale={locale} />
     </div>
 
+    <!-- Scroll reveal for AnimatedSection.astro; astro:page-load fires on first load and after every page swap -->
+    <script>
+      // One pair of observers, reset on every page (ClientRouter swaps the body)
+      let io: IntersectionObserver | undefined, counters: IntersectionObserver | undefined;
+      document.addEventListener('astro:page-load', () => {
+        io?.disconnect();
+        counters?.disconnect();
+        io = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-visible');
+              io!.unobserve(e.target);
+            }
+          }
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach((el) => io!.observe(el));
+
+        // Stats count up from 0 when they scroll into view ("1000+" -> 0+ ... 1000+)
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        counters = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            counters!.unobserve(e.target);
+            const el = e.target as HTMLElement;
+            const [, num, suffix] = el.textContent!.trim().match(/^(\d+)(.*)$/)!;
+            const end = +num, start = performance.now(), ms = 1500;
+            const tick = (now: number) => {
+              const p = Math.min((now - start) / ms, 1);
+              el.textContent = Math.floor((p === 1 ? 1 : 1 - 2 ** (-10 * p)) * end) + suffix; // easeOutExpo
+              if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          }
+        }, { threshold: 0.1 });
+        document.querySelectorAll('[data-count]').forEach((el) => counters!.observe(el));
+      });
+    </script>
   </body>
 </html>
 

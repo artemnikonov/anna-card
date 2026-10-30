@@ -1,13 +1,12 @@
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
-import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: 'https://annabody.studio',
   output: "static",
   prefetch: {
-    prefetchAll: false,
+    prefetchAll: true,
     defaultStrategy: 'hover'
   },
   i18n: {
@@ -18,17 +17,9 @@ export default defineConfig({
     }
   },
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    react(),
     sitemap(),
   ],
   vite: {
-    resolve: {
-      alias: {
-        '@': '/src'
-      }
-    },
+    plugins: [tailwindcss()],
   },
 });

@@ -28,6 +28,12 @@ rsync -avz --delete \
     --exclude 'node_modules' \
     --exclude '.git' \
     --exclude '.env' \
+    --exclude '.env.*' \
+    --exclude 'dist' \
+    --exclude '.astro' \
+    --exclude '.idea' \
+    --exclude '.claude' \
+    --exclude '.DS_Store' \
     -e "ssh -i $SSH_KEY" \
     . $SERVER_USER@$SERVER_HOST:$SERVER_PATH/
 

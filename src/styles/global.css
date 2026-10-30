@@ -1,8 +1,100 @@
-@import './fonts.css';
+@import './fonts.css' layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1;
+  --text-xs--letter-spacing: 0.05em;
+  --text-xs--font-weight: 400;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25;
+  --text-sm--letter-spacing: 0.025em;
+  --text-sm--font-weight: 400;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5;
+  --text-base--letter-spacing: 0em;
+  --text-base--font-weight: 400;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75;
+  --text-lg--letter-spacing: -0.01em;
+  --text-lg--font-weight: 400;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75;
+  --text-xl--letter-spacing: -0.015em;
+  --text-xl--font-weight: 400;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2;
+  --text-2xl--letter-spacing: -0.02em;
+  --text-2xl--font-weight: 500;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 1.3;
+  --text-3xl--letter-spacing: -0.025em;
+  --text-3xl--font-weight: 600;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 1.2;
+  --text-4xl--letter-spacing: -0.03em;
+  --text-4xl--font-weight: 700;
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1;
+  --text-5xl--letter-spacing: -0.035em;
+  --text-5xl--font-weight: 700;
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 1;
+  --text-6xl--letter-spacing: -0.04em;
+  --text-6xl--font-weight: 800;
+  --text-7xl: 4.5rem;
+  --text-7xl--line-height: 1;
+  --text-7xl--letter-spacing: -0.045em;
+  --text-7xl--font-weight: 800;
+  --text-8xl: 6rem;
+  --text-8xl--line-height: 1;
+  --text-8xl--letter-spacing: -0.05em;
+  --text-8xl--font-weight: 900;
+  --text-9xl: 8rem;
+  --text-9xl--line-height: 1;
+  --text-9xl--letter-spacing: -0.05em;
+  --text-9xl--font-weight: 900;
+
+  --font-heading: montserrat, system-ui, sans-serif;
+  --font-paragraph: montserrat, system-ui, sans-serif;
+  --font-sans: montserrat, system-ui, sans-serif;
+
+  --color-blue-gray: #475569;
+  --color-olive-accent: #808000;
+  --color-destructive: #d32f2f;
+  --color-destructive-foreground: #ffffff;
+  --color-background: #ffffff;
+  --color-secondary: #808000;
+  --color-foreground: #000000;
+  --color-secondary-foreground: #ffffff;
+  --color-primary-foreground: #ffffff;
+  --color-primary: #437b7d; /* 4.6:1 on gray-50, 4.8:1 on white (WCAG AA); was #5f9ea0 */
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  /* v3 behaviour: buttons show a pointer cursor */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
 
 @layer base {
   html, body {
@@ -42,7 +134,7 @@
   input:focus-visible,
   textarea:focus-visible,
   select:focus-visible {
-    outline: 2px solid hsl(var(--primary));
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
@@ -66,90 +158,70 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
-
-    /* Disable framer-motion transforms */
-    [style*="transform"] {
-      transform: none !important;
-    }
   }
 }
 
 
-@layer components {
-  [role="tabpanel"] {
-    @apply transition-opacity duration-200;
-  }
+/* Mobile menu (Header.astro): no page scroll behind the open dialog */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
 
-  .language-switcher {
-    @apply transition-colors duration-200;
-  }
 
-  .animate-in {
-    animation-fill-mode: both;
+@keyframes slide-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* Scroll reveal (see AnimatedSection.astro) */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .reveal {
     opacity: 0;
-    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .reveal-fadeUp { transform: translateY(20px); }
+  .reveal-fadeLeft { transform: translateX(-50px); }
+  .reveal-fadeRight { transform: translateX(50px); }
+  .reveal-scale { transform: scale(0.8); }
+  .reveal.is-visible { opacity: 1; transform: none; }
+
+  /* Home hero: plays on first paint with no JS, so the headline never waits for a script */
+  .hero-in {
+    animation: hero-in 0.6s ease-out both;
+    animation-delay: var(--reveal-delay, 0s);
   }
 
-  .slide-in-from-bottom {
-    animation: slide-in-from-bottom var(--animation-duration, 0.6s) ease-out
-      var(--animation-delay, 0.2s) forwards;
+  /* Main booking button: soft pulsing glow, grows a little on hover.
+     The shadow is static on ::after and only its opacity animates (no repaint per frame). */
+  .glow {
+    position: relative;
+    transition: transform 0.2s ease, background-color 0.15s, color 0.15s;
   }
-
-  .slide-in-from-top {
-    animation: slide-in-from-top var(--animation-duration, 0.6s) ease-out
-      var(--animation-delay, 0.2s) forwards;
-  }
-
-  .fade-in {
-    animation-fill-mode: both;
+  .glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: 0 0 18px 4px rgb(var(--glow, 67 123 125) / 0.5), 0 0 6px 1px rgb(128 128 0 / 0.25);
     opacity: 0;
-    animation: fade-in var(--animation-duration, 1s) ease-out var(--animation-delay, 0.2s) forwards;
+    animation: glow 2s ease-in-out infinite;
   }
+  .glow:hover { transform: scale(1.05); }
+  .glow:active { transform: scale(0.95); }
+}
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(20px); }
+}
+@keyframes glow {
+  50% { opacity: 1; }
+}
 
-  .scale-in {
-    animation: scale-in var(--animation-duration, 0.6s) ease-out var(--animation-delay, 0.2s)
-      forwards;
-  }
-
-  @keyframes slide-in-from-bottom {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slide-in-from-top {
-    from {
-      opacity: 0;
-      transform: translateY(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes scale-in {
-    from {
-      opacity: 0;
-      transform: scale(0.7);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
+/* Page changes (ClientRouter): instant swap, no cross-fade or morph.
+   Any view transition animation flickers in Safari; content fades in via .reveal instead. */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation: none !important;
 }

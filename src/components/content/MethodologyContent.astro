@@ -1,36 +1,20 @@
 ---
+import { cn } from '@/lib/utils';
+import PageHero from '@/components/PageHero.astro';
+import CtaSection from '@/components/CtaSection.astro';
 import { getLocaleFromUrl, getTranslations, getLocalizedPath } from '@/lib/i18n';
-import { AnimatedSection } from '@/components/ui/AnimatedSection';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import GlowButton from '@/components/ui/GlowButton';
-import { Search, Target, TrendingUp, CheckCircle, Clock, Users } from 'lucide-react';
+import AnimatedSection from '@/components/ui/AnimatedSection.astro';
+import { Activity, Hand, Search, Target, TrendingUp, CircleCheck, Clock, Users } from '@lucide/astro';
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = getTranslations(locale);
 
-const assessmentItems = [
-  t.methodology.assessmentItem1,
-  t.methodology.assessmentItem2,
-  t.methodology.assessmentItem3,
-  t.methodology.assessmentItem4,
-  t.methodology.assessmentItem5
-];
-
-const planningItems = [
-  t.methodology.planningItem1,
-  t.methodology.planningItem2,
-  t.methodology.planningItem3,
-  t.methodology.planningItem4,
-  t.methodology.planningItem5
-];
-
-const monitoringItems = [
-  t.methodology.monitoringItem1,
-  t.methodology.monitoringItem2,
-  t.methodology.monitoringItem3,
-  t.methodology.monitoringItem4,
-  t.methodology.monitoringItem5
+const m = t.methodology;
+const steps = [
+  { title: m.step1Title, desc: m.step1Desc, items: m.step1Items, icon: Search, img: '/images/methodology/assessment.webp', alt: t.images.assessment },
+  { title: m.step2Title, desc: m.step2Desc, items: m.step2Items, icon: Hand, img: '/images/methodology/hands-on.webp', alt: t.images.massage, pos: '50% 0%' },
+  { title: m.step3Title, desc: m.step3Desc, items: m.step3Items, icon: Activity, img: '/images/methodology/monitoring.webp', alt: t.images.monitoring },
+  { title: m.step4Title, desc: m.step4Desc, items: m.step4Items, icon: TrendingUp, img: '/images/methodology/planning.webp', alt: t.images.planning },
 ];
 
 const whyItWorksItems = [
@@ -41,27 +25,13 @@ const whyItWorksItems = [
 ---
 
 <div class="min-h-screen bg-white overflow-x-hidden">
-  <!-- Header -->
-  <section class="py-12 sm:py-16 md:py-24 bg-gray-50">
-    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
-      <AnimatedSection client:visible animation="fadeUp">
-        <div class="text-center">
-          <h1 class="text-4xl sm:text-5xl font-heading font-bold text-gray-800 mb-6">
-            {t.methodology.title}
-          </h1>
-          <p class="text-lg sm:text-xl font-paragraph text-blue-gray max-w-3xl mx-auto">
-            {t.methodology.subtitle}
-          </p>
-        </div>
-      </AnimatedSection>
-    </div>
-  </section>
+  <PageHero title={t.methodology.title} subtitle={t.methodology.subtitle} />
 
   <!-- Method Overview -->
   <section class="py-12 sm:py-16 md:py-24">
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center mb-12 md:mb-20">
-        <AnimatedSection client:visible animation="fadeLeft">
+        <AnimatedSection animation="fadeLeft">
           <h2 class="text-4xl font-heading font-bold text-gray-800 mb-6">
             {t.methodology.evidenceBased}
           </h2>
@@ -76,10 +46,10 @@ const whyItWorksItems = [
           </p>
         </AnimatedSection>
 
-        <AnimatedSection client:visible animation="fadeRight">
+        <AnimatedSection animation="fadeRight">
           <img
             src="/images/methodology/overview.webp"
-            alt="Anna Z. demonstrating assessment techniques"
+            alt={t.images.methodologyOverview}
             width="600"
             class="w-full h-96 object-cover rounded-lg shadow-lg select-none"
             loading="lazy"
@@ -90,10 +60,10 @@ const whyItWorksItems = [
     </div>
   </section>
 
-  <!-- Three Steps -->
+  <!-- Steps -->
   <section class="py-12 sm:py-16 md:py-24 bg-gray-50">
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
-      <AnimatedSection client:visible animation="fadeUp">
+      <AnimatedSection animation="fadeUp">
         <div class="text-center mb-12 sm:mb-16">
           <h2 class="text-3xl sm:text-4xl font-heading font-bold text-gray-800 mb-6">
             {t.methodology.ourApproach}
@@ -104,134 +74,52 @@ const whyItWorksItems = [
         </div>
       </AnimatedSection>
 
-      <div class="space-y-12 sm:space-y-16 md:space-y-20">
-        <!-- Step 1: Assessment -->
-        <AnimatedSection client:visible animation="fadeUp">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            <div>
-              <div class="flex items-center mb-6">
-                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mr-4">
-                  <span class="text-2xl font-heading font-bold text-white">01</span>
-                </div>
-                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Search className="w-8 h-8 text-primary" client:idle />
-                </div>
-              </div>
-              <h3 class="text-3xl font-heading font-bold text-gray-800 mb-6">
-                {t.methodology.assessment}
-              </h3>
-              <p class="text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
-                {t.methodology.assessmentDesc}
-              </p>
-              <div class="space-y-3">
-                {assessmentItems.map((item) => (
-                  <div class="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary" client:idle />
-                    <span class="font-paragraph text-gray-700">{item}</span>
+      <ol class="space-y-12 sm:space-y-16 md:space-y-20">
+        {steps.map((step, i) => (
+          <li>
+            <AnimatedSection>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                <div class:list={[i % 2 === 1 && 'lg:order-2']}>
+                  <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mr-4">
+                      <span class="text-2xl font-heading font-bold text-white">{String(i + 1).padStart(2, '0')}</span>
+                    </div>
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                      <step.icon class="w-8 h-8 text-primary" />
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <img
-                src="/images/methodology/assessment.webp"
-                alt="Comprehensive assessment process"
-                width="600"
-                class="w-full h-80 object-cover rounded-lg shadow-lg select-none"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </div>
-        </AnimatedSection>
-
-        <!-- Step 2: Movement Plan -->
-        <AnimatedSection client:visible animation="fadeUp">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
-            <div class="order-2 lg:order-1">
-              <img
-                src="/images/methodology/planning.webp"
-                alt="Personalized movement plan development"
-                width="600"
-                class="w-full h-80 object-cover rounded-lg shadow-lg select-none"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            <div class="order-1 lg:order-2">
-              <div class="flex items-center mb-6">
-                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mr-4">
-                  <span class="text-2xl font-heading font-bold text-white">02</span>
+                  <h3 class="text-3xl font-heading font-bold text-gray-800 mb-6">{step.title}</h3>
+                  <p class="text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">{step.desc}</p>
+                  <ul class="space-y-3">
+                    {step.items.map((item) => (
+                      <li class="flex items-center gap-3">
+                        <CircleCheck class="w-5 h-5 text-primary shrink-0" />
+                        <span class="font-paragraph text-gray-700">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Target className="w-8 h-8 text-primary" client:idle />
-                </div>
+                <img
+                  src={step.img}
+                  alt={step.alt}
+                  style={step.pos && `object-position:${step.pos}`}
+                  width="600"
+                  class:list={['w-full h-80 object-cover rounded-lg shadow-lg select-none', i % 2 === 1 && 'lg:order-1']}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
-              <h3 class="text-3xl font-heading font-bold text-gray-800 mb-6">
-                {t.methodology.planning}
-              </h3>
-              <p class="text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
-                {t.methodology.planningDesc}
-              </p>
-              <div class="space-y-3">
-                {planningItems.map((item) => (
-                  <div class="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary" client:idle />
-                    <span class="font-paragraph text-gray-700">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
-
-        <!-- Step 3: Progress Tracking -->
-        <AnimatedSection client:visible animation="fadeUp">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
-            <div>
-              <div class="flex items-center mb-6">
-                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mr-4">
-                  <span class="text-2xl font-heading font-bold text-white">03</span>
-                </div>
-                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <TrendingUp className="w-8 h-8 text-primary" client:idle />
-                </div>
-              </div>
-              <h3 class="text-3xl font-heading font-bold text-gray-800 mb-6">
-                {t.methodology.monitoring}
-              </h3>
-              <p class="text-lg font-paragraph text-blue-gray mb-6 leading-relaxed">
-                {t.methodology.monitoringDesc}
-              </p>
-              <div class="space-y-3">
-                {monitoringItems.map((item) => (
-                  <div class="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary" client:idle />
-                    <span class="font-paragraph text-gray-700">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <img
-                src="/images/methodology/monitoring.webp"
-                alt="Progress tracking and monitoring"
-                width="600"
-                class="w-full h-80 object-cover rounded-lg shadow-lg select-none"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </div>
-        </AnimatedSection>
-      </div>
+            </AnimatedSection>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
   <!-- Why This Works -->
   <section class="py-12 sm:py-16 md:py-24">
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
-      <AnimatedSection client:visible animation="fadeUp">
+      <AnimatedSection animation="fadeUp">
         <div class="text-center mb-16">
           <h2 class="text-3xl sm:text-4xl font-heading font-bold text-gray-800 mb-6 leading-tight">
             {t.methodology.whyItWorks}
@@ -244,13 +132,13 @@ const whyItWorksItems = [
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         {whyItWorksItems.map((item, index) => (
-          <AnimatedSection client:visible animation="fadeUp" delay={index * 0.1}>
-            <Card className="h-full text-center" client:idle>
-              <CardContent className="p-6 sm:p-8" client:idle>
+          <AnimatedSection animation="fadeUp" delay={index * 0.1}>
+            <div class={cn("rounded-xl border border-foreground/10 text-foreground bg-background", "h-full text-center")}>
+              <div class={cn("p-6 pt-0", "p-6 sm:p-8")}>
                 <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  {index === 0 && <Users className="w-8 h-8 text-primary" client:idle />}
-                  {index === 1 && <Target className="w-8 h-8 text-primary" client:idle />}
-                  {index === 2 && <Clock className="w-8 h-8 text-primary" client:idle />}
+                  {index === 0 && <Users class="w-8 h-8 text-primary" />}
+                  {index === 1 && <Target class="w-8 h-8 text-primary" />}
+                  {index === 2 && <Clock class="w-8 h-8 text-primary" />}
                 </div>
                 <h3 class="text-2xl font-heading font-semibold text-gray-800 mb-4">
                   {item.title}
@@ -258,8 +146,8 @@ const whyItWorksItems = [
                 <p class="font-paragraph text-blue-gray leading-relaxed">
                   {item.description}
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </AnimatedSection>
         ))}
       </div>
@@ -267,37 +155,11 @@ const whyItWorksItems = [
   </section>
 
   <!-- CTA Section -->
-  <section class="py-12 sm:py-16 md:py-24 bg-primary">
-    <div class="container mx-auto px-4 sm:px-6 text-center max-w-7xl">
-      <AnimatedSection client:visible animation="fadeUp">
-        <h2 class="text-3xl sm:text-4xl font-heading font-bold text-white mb-6 leading-tight">
-          {t.methodology.startToday}
-        </h2>
-        <p class="text-lg sm:text-xl font-paragraph text-white mb-8 max-w-2xl mx-auto leading-relaxed">
-          {t.methodology.startTodaySubtitle}
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <GlowButton
-            href={getLocalizedPath('/contact', locale)}
-            size="lg"
-            variant="outline"
-            className="border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg font-medium"
-            client:idle
-          >
-            {t.homepage.bookSession}
-          </GlowButton>
-          <a href={getLocalizedPath('/services', locale)}>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg font-medium"
-              client:idle
-            >
-              {t.nav.services}
-            </Button>
-          </a>
-        </div>
-      </AnimatedSection>
-    </div>
-  </section>
+  <CtaSection
+    glow
+    title={t.methodology.startToday}
+    subtitle={t.methodology.startTodaySubtitle}
+    bookLabel={t.homepage.bookSession}
+    secondary={{ href: getLocalizedPath('/services', locale), label: t.nav.services }}
+  />
 </div>

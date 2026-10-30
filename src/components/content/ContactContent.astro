@@ -1,15 +1,18 @@
 ---
+import PageHero from '@/components/PageHero.astro';
+import { CONTACTS } from '@/lib/contacts';
 import { getLocaleFromUrl, getTranslations } from '@/lib/i18n';
-import { AnimatedSection } from '@/components/ui/AnimatedSection';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MapPin, Mail, Camera, MessageCircle, Clock, Send } from 'lucide-react';
+import AnimatedSection from '@/components/ui/AnimatedSection.astro';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { MapPin, Mail, Camera, MessageCircle, Clock, Send } from '@lucide/astro';
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = getTranslations(locale);
 
 const faqs = [
   { question: t.contact.faq1Q, answer: t.contact.faq1A },
+  { question: t.contact.faq5Q, answer: t.contact.faq5A },
   { question: t.contact.faq2Q, answer: t.contact.faq2A },
   { question: t.contact.faq3Q, answer: t.contact.faq3A },
   { question: t.contact.faq4Q, answer: t.contact.faq4A }
@@ -17,134 +20,82 @@ const faqs = [
 ---
 
 <div class="min-h-screen bg-white overflow-x-hidden">
-  <!-- Header -->
-  <section class="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white">
-    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
-      <AnimatedSection client:visible animation="fadeUp">
-        <div class="text-center">
-          <h1 class="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-gray-800 mb-4 sm:mb-6 leading-tight">
-            {t.contact.title}
-          </h1>
-          <p class="text-base sm:text-lg md:text-xl font-paragraph text-blue-gray max-w-3xl mx-auto px-4 leading-relaxed">
-            {t.contact.subtitle}
-          </p>
-        </div>
-      </AnimatedSection>
-    </div>
-  </section>
+  <PageHero title={t.contact.title} subtitle={t.contact.subtitle} />
 
   <!-- Contact Methods -->
   <section class="py-12 sm:py-16 bg-white border-t border-gray-100">
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16">
         <!-- Telegram - Primary -->
-        <AnimatedSection client:visible animation="fadeUp" delay={0}>
-          <Card className="text-center hover:shadow-lg transition-shadow duration-300 h-full border-2 border-primary" client:idle>
-            <CardContent className="p-6" client:idle>
+        <AnimatedSection animation="fadeUp" delay={0}>
+          <div class={cn("rounded-xl border border-foreground/10 text-foreground bg-background", "text-center hover:shadow-lg transition-shadow duration-300 h-full border-2 border-primary")}>
+            <div class={cn("p-6 pt-0", "p-6")}>
               <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Send className="w-8 h-8 text-primary" client:idle />
+                <Send class="w-8 h-8 text-primary" />
               </div>
-              <h3 class="text-lg font-heading font-bold text-gray-800 mb-1.5">
+              <h2 class="text-lg font-heading font-bold text-gray-800 mb-1.5">
                 Telegram
-              </h3>
+              </h2>
               <p class="text-xs font-paragraph text-gray-500 mb-2">
                 {t.contact.telegramDesc}
               </p>
-              <a
-                href="https://t.me/AnnaZakernichnaia"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-block"
-                aria-label={t.contact.messageOnTelegram}
-              >
-                <Button size="sm" className="bg-primary hover:bg-primary/90 text-white" client:idle>
-                  {t.contact.messageOnTelegram}
-                </Button>
-              </a>
-            </CardContent>
-          </Card>
+              <a href={CONTACTS.telegram} target="_blank" rel="noopener noreferrer" class={cn(buttonVariants({ size: 'sm' }), 'bg-primary hover:bg-primary/90 text-white')}>{t.contact.messageOnTelegram}</a>
+            </div>
+          </div>
         </AnimatedSection>
 
         <!-- WhatsApp - Alternative Primary -->
-        <AnimatedSection client:visible animation="fadeUp" delay={0.1}>
-          <Card className="text-center hover:shadow-lg transition-shadow duration-300 h-full" client:idle>
-            <CardContent className="p-6" client:idle>
+        <AnimatedSection animation="fadeUp" delay={0.1}>
+          <div class={cn("rounded-xl border border-foreground/10 text-foreground bg-background", "text-center hover:shadow-lg transition-shadow duration-300 h-full")}>
+            <div class={cn("p-6 pt-0", "p-6")}>
               <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <MessageCircle className="w-8 h-8 text-primary" client:idle />
+                <MessageCircle class="w-8 h-8 text-primary" />
               </div>
-              <h3 class="text-lg font-heading font-bold text-gray-800 mb-1.5">
+              <h2 class="text-lg font-heading font-bold text-gray-800 mb-1.5">
                 WhatsApp
-              </h3>
+              </h2>
               <p class="text-xs font-paragraph text-gray-500 mb-2">
                 {t.contact.whatsappDesc}
               </p>
-              <a
-                href="https://wa.me/79267291313"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-block"
-                aria-label={t.contact.messageOnWhatsapp}
-              >
-                <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary/5" client:idle>
-                  {t.contact.messageOnWhatsapp}
-                </Button>
-              </a>
-            </CardContent>
-          </Card>
+              <a href={CONTACTS.whatsapp} target="_blank" rel="noopener noreferrer" class={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'border-primary text-primary hover:bg-primary/5')}>{t.contact.messageOnWhatsapp}</a>
+            </div>
+          </div>
         </AnimatedSection>
 
         <!-- Instagram -->
-        <AnimatedSection client:visible animation="fadeUp" delay={0.2}>
-          <Card className="text-center hover:shadow-lg transition-shadow duration-300 h-full" client:idle>
-            <CardContent className="p-6" client:idle>
+        <AnimatedSection animation="fadeUp" delay={0.2}>
+          <div class={cn("rounded-xl border border-foreground/10 text-foreground bg-background", "text-center hover:shadow-lg transition-shadow duration-300 h-full")}>
+            <div class={cn("p-6 pt-0", "p-6")}>
               <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Camera className="w-8 h-8 text-primary" client:idle />
+                <Camera class="w-8 h-8 text-primary" />
               </div>
-              <h3 class="text-lg font-heading font-bold text-gray-800 mb-1.5">
+              <h2 class="text-lg font-heading font-bold text-gray-800 mb-1.5">
                 Instagram
-              </h3>
+              </h2>
               <p class="text-xs font-paragraph text-gray-500 mb-2">
                 {t.contact.instagramDesc}
               </p>
-              <a
-                href="https://www.instagram.com/annabody.studio"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-block"
-                aria-label={t.contact.followOnInstagram}
-              >
-                <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary/5" client:idle>
-                  {t.contact.followOnInstagram}
-                </Button>
-              </a>
-            </CardContent>
-          </Card>
+              <a href={CONTACTS.instagram} target="_blank" rel="noopener noreferrer" class={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'border-primary text-primary hover:bg-primary/5')}>{t.contact.followOnInstagram}</a>
+            </div>
+          </div>
         </AnimatedSection>
 
         <!-- Email - Last Resort -->
-        <AnimatedSection client:visible animation="fadeUp" delay={0.3}>
-          <Card className="text-center hover:shadow-lg transition-shadow duration-300 h-full" client:idle>
-            <CardContent className="p-6" client:idle>
+        <AnimatedSection animation="fadeUp" delay={0.3}>
+          <div class={cn("rounded-xl border border-foreground/10 text-foreground bg-background", "text-center hover:shadow-lg transition-shadow duration-300 h-full")}>
+            <div class={cn("p-6 pt-0", "p-6")}>
               <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Mail className="w-8 h-8 text-primary" client:idle />
+                <Mail class="w-8 h-8 text-primary" />
               </div>
-              <h3 class="text-lg font-heading font-bold text-gray-800 mb-1.5">
+              <h2 class="text-lg font-heading font-bold text-gray-800 mb-1.5">
                 Email
-              </h3>
+              </h2>
               <p class="text-xs font-paragraph text-gray-500 mb-2">
                 {t.contact.emailDesc}
               </p>
-              <a
-                href="mailto:ann.massage@icloud.com"
-                class="inline-block"
-                aria-label={t.contact.sendEmail}
-              >
-                <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary/5" client:idle>
-                  {t.contact.sendEmail}
-                </Button>
-              </a>
-            </CardContent>
-          </Card>
+              <a href={`mailto:${CONTACTS.email}`} class={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'border-primary text-primary hover:bg-primary/5')}>{t.contact.sendEmail}</a>
+            </div>
+          </div>
         </AnimatedSection>
       </div>
     </div>
@@ -155,18 +106,18 @@ const faqs = [
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Contact Information -->
-        <AnimatedSection client:visible animation="fadeUp">
-          <Card className="h-full" client:idle>
-            <CardHeader client:idle>
-              <CardTitle className="text-2xl font-heading font-bold text-gray-800" client:idle>
+        <AnimatedSection animation="fadeUp">
+          <div class={cn("rounded-xl border border-foreground/10 text-foreground bg-background", "h-full")}>
+            <div class="flex flex-col space-y-1.5 p-6">
+              <h2 class={cn("font-semibold text-lg leading-none tracking-tight", "text-2xl font-heading font-bold text-gray-800")}>
                 {t.contact.contactInformation}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6" client:idle>
+              </h2>
+            </div>
+            <div class={cn("p-6 pt-0", "space-y-6")}>
               <div class="flex items-start gap-4">
-                <MapPin className="w-6 h-6 text-primary mt-1 flex-shrink-0" client:idle />
+                <MapPin class="w-6 h-6 text-primary mt-1 shrink-0" />
                 <div>
-                  <h4 class="font-heading font-semibold text-gray-800 mb-1">{t.contact.location}</h4>
+                  <h3 class="font-heading font-semibold text-gray-800 mb-1">{t.contact.location}</h3>
                   <p class="font-paragraph text-blue-gray">
                     {t.contact.locationValue}
                   </p>
@@ -174,65 +125,65 @@ const faqs = [
               </div>
 
               <div class="flex items-start gap-4">
-                <MessageCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0" client:idle />
+                <MessageCircle class="w-6 h-6 text-primary mt-1 shrink-0" />
                 <div>
-                  <h4 class="font-heading font-semibold text-gray-800 mb-1">WhatsApp</h4>
+                  <h3 class="font-heading font-semibold text-gray-800 mb-1">WhatsApp</h3>
                   <p class="font-paragraph text-blue-gray">{t.contact.phoneValue}</p>
                 </div>
               </div>
 
               <div class="flex items-start gap-4">
-                <Send className="w-6 h-6 text-primary mt-1 flex-shrink-0" client:idle />
+                <Send class="w-6 h-6 text-primary mt-1 shrink-0" />
                 <div>
-                  <h4 class="font-heading font-semibold text-gray-800 mb-1">Telegram</h4>
-                  <p class="font-paragraph text-blue-gray">@AnnaZakernichnaia</p>
+                  <h3 class="font-heading font-semibold text-gray-800 mb-1">Telegram</h3>
+                  <p class="font-paragraph text-blue-gray">{CONTACTS.telegramHandle}</p>
                 </div>
               </div>
 
               <div class="flex items-start gap-4">
-                <Mail className="w-6 h-6 text-primary mt-1 flex-shrink-0" client:idle />
+                <Mail class="w-6 h-6 text-primary mt-1 shrink-0" />
                 <div>
-                  <h4 class="font-heading font-semibold text-gray-800 mb-1">{t.contact.emailLabel}</h4>
+                  <h3 class="font-heading font-semibold text-gray-800 mb-1">{t.contact.emailLabel}</h3>
                   <p class="font-paragraph text-blue-gray">{t.contact.emailValue}</p>
                 </div>
               </div>
 
               <div class="flex items-start gap-4">
-                <Clock className="w-6 h-6 text-primary mt-1 flex-shrink-0" client:idle />
+                <Clock class="w-6 h-6 text-primary mt-1 shrink-0" />
                 <div>
-                  <h4 class="font-heading font-semibold text-gray-800 mb-1">{t.contact.responseTime}</h4>
+                  <h3 class="font-heading font-semibold text-gray-800 mb-1">{t.contact.responseTime}</h3>
                   <p class="font-paragraph text-blue-gray">
                     {t.contact.responseTimeValue}<br />
                     <span class="text-sm">{t.contact.emergencyConsultations}</span>
                   </p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </AnimatedSection>
 
         <!-- Movement Studio -->
-        <AnimatedSection client:visible animation="fadeUp" delay={0.1}>
-          <Card className="h-full" client:idle>
-            <CardContent className="p-0" client:idle>
+        <AnimatedSection animation="fadeUp" delay={0.1}>
+          <div class={cn("rounded-xl border border-foreground/10 text-foreground bg-background", "h-full")}>
+            <div class={cn("p-6 pt-0", "p-0")}>
               <img
                 src="/images/contact/recovery-studio.webp"
-                alt="Private practice space in Limassol, Cyprus"
+                alt={t.images.studio}
                 width="600"
                 class="w-full h-64 object-cover rounded-t-lg select-none"
                 loading="lazy"
                 decoding="async"
               />
               <div class="p-6">
-                <h4 class="text-2xl font-heading font-bold text-gray-800 mb-4">
+                <h2 class="text-2xl font-heading font-bold text-gray-800 mb-4">
                   {t.contact.recoveryStudio}
-                </h4>
+                </h2>
                 <p class="font-paragraph text-blue-gray">
                   {t.contact.recoveryStudioDesc}
                 </p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </AnimatedSection>
       </div>
     </div>
@@ -241,7 +192,7 @@ const faqs = [
   <!-- FAQ Section -->
   <section class="py-12 sm:py-16 md:py-24">
     <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
-      <AnimatedSection client:visible animation="fadeUp">
+      <AnimatedSection animation="fadeUp">
         <div class="text-center mb-12 sm:mb-16">
           <h2 class="text-3xl sm:text-4xl font-heading font-bold text-gray-800 mb-4 sm:mb-6 leading-tight">
             {t.contact.faqTitle}
@@ -254,17 +205,17 @@ const faqs = [
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
         {faqs.map((faq, index) => (
-          <AnimatedSection client:visible animation="fadeUp" delay={index * 0.1}>
-            <Card client:idle>
-              <CardContent className="p-6" client:idle>
-                <h4 class="font-heading font-semibold text-gray-800 mb-3">
+          <AnimatedSection animation="fadeUp" delay={index * 0.1}>
+            <div class="rounded-xl border border-foreground/10 text-foreground bg-background">
+              <div class={cn("p-6 pt-0", "p-6")}>
+                <h3 class="font-heading font-semibold text-gray-800 mb-3">
                   {faq.question}
-                </h4>
+                </h3>
                 <p class="font-paragraph text-blue-gray leading-relaxed">
                   {faq.answer}
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </AnimatedSection>
         ))}
       </div>

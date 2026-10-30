@@ -1,0 +1,34 @@
+---
+// Closing call-to-action band. The booking button follows bookingLink(): Telegram on RU, contact page on EN.
+import AnimatedSection from '@/components/ui/AnimatedSection.astro';
+import { buttonVariants } from '@/components/ui/button';
+import { bookingLink } from '@/lib/contacts';
+import { getLocaleFromUrl } from '@/lib/i18n';
+import { cn } from '@/lib/utils';
+
+interface Props {
+  title: string;
+  subtitle: string;
+  bookLabel: string;
+  secondary?: { href: string; label: string };
+  glow?: boolean;
+}
+const { title, subtitle, bookLabel, secondary, glow } = Astro.props;
+const booking = bookingLink(getLocaleFromUrl(Astro.url));
+const btn = cn(
+  buttonVariants({ variant: 'outline', size: 'lg' }),
+  'border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-base sm:text-lg font-medium w-full sm:w-auto'
+);
+---
+<section class="py-12 sm:py-16 md:py-24 bg-primary">
+  <div class="container mx-auto px-4 sm:px-6 text-center max-w-7xl">
+    <AnimatedSection>
+      <h2 class="text-3xl sm:text-4xl font-heading font-bold text-white mb-6 leading-tight">{title}</h2>
+      <p class="text-lg sm:text-xl font-paragraph text-white mb-8 max-w-2xl mx-auto leading-relaxed">{subtitle}</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a {...booking} class={cn(btn, glow && 'glow [--glow:255_255_255]')}>{bookLabel}</a>
+        {secondary && <a href={secondary.href} class={btn}>{secondary.label}</a>}
+      </div>
+    </AnimatedSection>
+  </div>
+</section>
